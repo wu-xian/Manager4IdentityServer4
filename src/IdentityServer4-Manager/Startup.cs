@@ -37,6 +37,9 @@ namespace IdentityServer4_Manager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add framework services.
+            services.AddApplicationInsightsTelemetry(Configuration);
+
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection")),
                 ServiceLifetime.Scoped
@@ -49,8 +52,6 @@ namespace IdentityServer4_Manager
             //Add IdentityServer services
             AddIdentityServer(services);
 
-            // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc();
         }
@@ -79,6 +80,10 @@ namespace IdentityServer4_Manager
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
+
+            app.UseIdentity();
+
+            app.UseIdentityServer();
 
             app.UseMvc(routes =>
             {

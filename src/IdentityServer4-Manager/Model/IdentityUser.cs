@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer4_Manager.Model
 {
-    public class IdentityUser : Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser<Guid>
+    public class IdentityUser : Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser
     {
     }
 }

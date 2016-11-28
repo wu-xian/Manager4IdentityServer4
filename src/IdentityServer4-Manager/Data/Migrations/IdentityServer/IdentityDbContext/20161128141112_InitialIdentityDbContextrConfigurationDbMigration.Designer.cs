@@ -7,8 +7,8 @@ using IdentityServer4_Manager.Model;
 
 namespace IdentityServer4Manager.Data.Migrations.IdentityServer.IdentityDbContext
 {
-    [DbContext(typeof(IdentityDbContext))]
-    [Migration("20161128133312_InitialIdentityDbContextrConfigurationDbMigration")]
+    [DbContext(typeof(IdentityServer4_Manager.Model.IdentityDbContext))]
+    [Migration("20161128141112_InitialIdentityDbContextrConfigurationDbMigration")]
     partial class InitialIdentityDbContextrConfigurationDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

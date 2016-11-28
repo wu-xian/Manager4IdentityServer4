@@ -7,7 +7,7 @@ using IdentityServer4_Manager.Model;
 
 namespace IdentityServer4Manager.Data.Migrations.IdentityServer.IdentityDbContext
 {
-    [DbContext(typeof(IdentityDbContext))]
+    [DbContext(typeof(IdentityServer4_Manager.Model.IdentityDbContext))]
     partial class IdentityDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

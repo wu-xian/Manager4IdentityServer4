@@ -30,7 +30,7 @@
     "IdentityServer4.EntityFramework": "1.0.0-rc3",
     "IdentityServer4.AspNetIdentity": "1.0.0-rc3",
     "Pomelo.EntityFrameworkCore.MySql": "1.0.1",
-    "Microsoft.AspNetCore.Identity": "1.1.0-*"
+    "Microsoft.AspNetCore.Identity": "1.0.0"
   },
 
   "tools": {

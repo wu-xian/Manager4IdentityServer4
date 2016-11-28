@@ -9,7 +9,7 @@ namespace IdentityServer4_Manager.Model
 {
     public class IdentityDbContext : IdentityDbContext<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser>
     {
-        public IdentityDbContext(DbContextOptions options) : base(options)
+        public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
         { }
 
         protected override void OnModelCreating(ModelBuilder builder)
