@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC8FCAA1-D095-44BF-920E-11DC849932C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{24877AAD-DB5A-4003-ACA5-16BD1292B910}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IdentityServer4-Manager", "src\IdentityServer4-Manager\IdentityServer4-Manager.xproj", "{89E0CF2C-1F21-42C6-95F8-6D768260FF8E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89E0CF2C-1F21-42C6-95F8-6D768260FF8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89E0CF2C-1F21-42C6-95F8-6D768260FF8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89E0CF2C-1F21-42C6-95F8-6D768260FF8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89E0CF2C-1F21-42C6-95F8-6D768260FF8E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{89E0CF2C-1F21-42C6-95F8-6D768260FF8E} = {BC8FCAA1-D095-44BF-920E-11DC849932C7}
+	EndGlobalSection
+EndGlobal
