@@ -29,11 +29,11 @@ namespace IdentityServer4_Manager.Controllers
                 PhoneNumber = "15101571730"
             };
             usr.PasswordHash = new PasswordHasher<Model.IdentityUser>().HashPassword(usr, "wuxian123");
-            await _userManager.CreateAsync(usr);
+            var aa = await _userManager.CreateAsync(usr);
             await _userManager.AddClaimAsync(await _userManager.FindByNameAsync("wu-xian"), new Claim(JwtClaimTypes.Role, "im role"));
 
 
-            return Ok();
+            return Json(aa);
         }
     }
 }
