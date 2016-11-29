@@ -4,7 +4,7 @@
 @{
 }
 @section page{
-    <script src="~/js/admin/user_index.js"></script>
+    <script src="~/js/user_index.js"></script>
     <link href="~/lib/AdminLTE/plugins/datepicker/datepicker3.css" rel="stylesheet" />
     <script src="~/lib/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
     <script src="~/lib/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js" charset="utf-8"></script>
@@ -12,7 +12,7 @@
 @{
     ViewData["Title"] = "User/Index";
 }
-@model Galaxies.Model.ViewModel.UserCondition
+@model IdentityServer4_Manager.Model.ViewModel.UserCondition
 
 <div class="box box-solid">
     <div class="box-header with-border">
@@ -29,28 +29,14 @@
     <div class="row box-body">
         <div class="col-xs-4">
             <div class="input-group">
+                <span class="input-group-addon">用户编号</span>
+                <input type="text" class="form-control" asp-for="UserId" placeholder="User Id">
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group">
                 <span class="input-group-addon">用户名</span>
                 <input type="text" class="form-control" asp-for="UserName" placeholder="User Name">
-            </div>
-        </div>
-        <div class="col-xs-4">
-            <div class="input-group">
-                <span class="input-group-addon">角色</span>
-                <select class="form-control" asp-for="RoleId" asp-items="Model.Roles"></select>
-            </div>
-        </div>
-    </div>
-    <div class="row box-body">
-        <div class="col-xs-4">
-            <div class="input-group">
-                <span class="input-group-addon">创建时间</span>
-                <input class="form-control" asp-for="InTimeSDate">
-            </div>
-        </div>
-        <div class="col-xs-4">
-            <div class="input-group">
-                <span class="input-group-addon">至</span>
-                <input class="form-control" asp-for="InTimeEDate">
             </div>
         </div>
     </div>
