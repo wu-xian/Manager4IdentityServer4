@@ -4,10 +4,8 @@
 @{
 }
 @section page{
-    <script src="~/js/user_index.js"></script>
-    <link href="~/lib/AdminLTE/plugins/datepicker/datepicker3.css" rel="stylesheet" />
-    <script src="~/lib/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js" charset="utf-8"></script>
+    <script src="~/js/user.js"></script>
+    <script src="~/js/galaxies.pipeline.js"></script>
 }
 @{
     ViewData["Title"] = "User/Index";
@@ -16,10 +14,10 @@
 
 <div class="box box-solid">
     <div class="box-header with-border">
-        <h3 class="box-title">查询条件</h3>
+        <h3 class="box-title">Condition</h3>
         <div class="box-tools pull-right">
             <button id="query" class="btn btn-primary" style="font-size:12px;">
-                <i class="glyphicon glyphicon-search"></i>&nbsp; 查询
+                <i class="glyphicon glyphicon-search"></i>&nbsp; Search
             </button>
             <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
                 <i class="glyphicon glyphicon-minus"></i>
@@ -29,20 +27,25 @@
     <div class="row box-body">
         <div class="col-xs-4">
             <div class="input-group">
-                <span class="input-group-addon">用户编号</span>
+                <span class="input-group-addon">ID</span>
                 <input type="text" class="form-control" asp-for="UserId" placeholder="User Id">
             </div>
         </div>
         <div class="col-xs-4">
             <div class="input-group">
-                <span class="input-group-addon">用户名</span>
+                <span class="input-group-addon">User Name</span>
                 <input type="text" class="form-control" asp-for="UserName" placeholder="User Name">
             </div>
         </div>
     </div>
 </div>
 
-<table id="tb_user" class="table table-striped table-bordered"></table>
+    <div class="box">
+        <div class="box-body">
+            <table id="tb_user" class="table table-striped"></table>
+        </div>
+    </div>
+
 
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

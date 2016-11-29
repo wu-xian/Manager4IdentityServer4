@@ -1,5 +1,6 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="js/account_login.js" />
+/// <reference path="js/galaxies.pipeline.js" />
 /// <reference path="js/role_index.js" />
 /// <reference path="js/site.js" />
 /// <reference path="js/user.js" />

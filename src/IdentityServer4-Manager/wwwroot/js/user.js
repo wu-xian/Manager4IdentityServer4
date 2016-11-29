@@ -11,15 +11,13 @@ function tableInit() {
             offset: params.offset,  //页码  
 
             userName: $("#UserName").val(),
-            roleId: $("#RoleId").val(),
-            inTimeSDate: $("#InTimeSDate").val(),
-            inTimeEDate: $("#InTimeEDate").val()
+            userId: $("#UserId").val(),
         };
         return temp;
     }
 
     $('#tb_user').bootstrapTable({
-        url: '/admin/user/query',
+        url: '/user/getusers',
         pagination: true,
         pageNumber: 1,
         pageSize: 5,
@@ -29,79 +27,45 @@ function tableInit() {
 
         columns: [
        {
-           field: 'userId',
-           title: '用户编号',
-           align: 'center',
-           valign: 'middle',
-           sortable: true,
-           visible: false,
-           width: 150
-       },
-       {
-           field: 'userName',
-           title: '用户名',
-           align: 'center',
-           valign: 'middle',
-           width: 250
-       },
-        {
-            field: 'roleId',
-            title: '角色编号',
-            align: 'center',
-            valign: 'middle',
-            visible: false,
-            width: 250
-        },
-        {
-            field: 'roleName',
-            title: '角色',
-            align: 'center',
-            valign: 'middle',
-            width: 250
-        },
-       {
-           field: 'realName',
-           title: '姓名',
-           align: 'center',
-           valign: 'middle',
-           width: 250
-       },
-       {
-           field: 'phoneNo',
-           title: '电话号',
-           align: 'center',
-           valign: 'middle',
-           width: 250
-       },
-       {
-           field: 'email',
-           title: '电子邮件',
-           align: 'center',
-           valign: 'middle',
-           width: 250
-       },
-       {
-           field: 'loginTimes',
-           title: '登陆次数',
-           align: 'center',
-           valign: 'middle',
-           width: 250
-       },
-       {
-           field: 'inTime',
-           title: '添加时间',
-           align: 'center',
-           valign: 'middle',
-           width: 250
-       },
-       {
            field: 'operation',
            title: '操作',
            align: 'center',
            valign: 'middle',
-           width: 250,
+           width: 100,
            formatter: operationFormatter
-       }]
+       },
+        {
+            field: 'id',
+            title: 'ID',
+            align: 'center',
+            valign: 'middle',
+            visible: true,
+            width: 150
+        },
+        {
+            field: 'userName',
+            title: 'User Name',
+            align: 'center',
+            valign: 'middle',
+            visible: true,
+            width: 250
+        },
+        {
+            field: 'email',
+            title: 'Email',
+            align: 'center',
+            valign: 'middle',
+            visible: true,
+            width: 250
+        },
+        {
+            field: 'phoneNumber',
+            title: 'Phone Number',
+            align: 'center',
+            valign: 'middle',
+            visible: true,
+            width: 250
+        }]
     });
 
 }
@@ -119,7 +83,7 @@ function eventInit() {
             realName: $("#modifyBody #RealName").val()
         };
         $.ajax({
-            url: '/admin/user/modify',
+            url: '/user/getusers',
             data: userModel,
             success: function (response) {
                 $.galaxies.pipeline(response);
@@ -134,7 +98,7 @@ function eventInit() {
 function operationFormatter(value, row, index) {
     return '<div class="btn-group">' +
     '<button class="glyphicon glyphicon-home"></button>' +
-    '<button class="glyphicon glyphicon-cog" title="modify" onclick="modifyUser(\'' + row.userId + '\',\'' + row.userName + '\')"></button>' +
+    '<button class="glyphicon glyphicon-cog" title="modify" onclick="modifyUser(\'' + row.userId + '\')"></button>' +
     '</div>';
 }
 

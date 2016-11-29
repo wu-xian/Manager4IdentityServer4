@@ -11,6 +11,8 @@ using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using IdentityServer4_Manager.Model;
+using AutoMapper;
+using IdentityServer4_Manager.Services;
 
 namespace IdentityServer4_Manager
 {
@@ -37,6 +39,9 @@ namespace IdentityServer4_Manager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //add host services
+            AddServices(services);
+
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
@@ -62,6 +67,9 @@ namespace IdentityServer4_Manager
         {
             //init DB
             InitializeDatabase(app);
+
+            //automapper
+            AutoMapper();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -94,6 +102,11 @@ namespace IdentityServer4_Manager
             });
         }
 
+        private void AddServices(IServiceCollection services)
+        {
+            services.AddScoped<UserService>();
+        }
+
         private void AddIdentityServer(IServiceCollection services)
         {
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
@@ -119,6 +132,14 @@ namespace IdentityServer4_Manager
 
                 serviceScope.ServiceProvider.GetRequiredService<IdentityDbContext>().Database.Migrate();
             }
+        }
+
+        private void AutoMapper()
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Model.IdentityUser, Model.ViewModel.UserDisplay>();
+            });
         }
     }
 }
