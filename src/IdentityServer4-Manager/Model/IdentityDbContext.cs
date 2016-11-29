@@ -19,5 +19,6 @@ namespace IdentityServer4_Manager.Model
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
     }
 }

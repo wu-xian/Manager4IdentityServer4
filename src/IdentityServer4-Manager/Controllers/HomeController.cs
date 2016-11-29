@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using IdentityServer4_Manager.Model;
 
 namespace IdentityServer4_Manager.Controllers
 {
@@ -29,6 +30,8 @@ namespace IdentityServer4_Manager.Controllers
 
         public IActionResult Error()
         {
+           // IdentityDbContext db = new IdentityDbContext();
+
             return View();
         }
     }
