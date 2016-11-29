@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 namespace IdentityServer4_Manager.Model
 {
     public class IdentityDbContext
-        : IdentityDbContext<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser<int>,
-            Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole<int>, int>
+        : IdentityDbContext<
+            Model.IdentityUser>
     {
+
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
         { }
 
@@ -36,7 +37,7 @@ namespace IdentityServer4_Manager.Model
             //builder.Entity<IdentityUserToken<int>>().ToTable("UserToken"); 
             #endregion
 
-            builder.Entity<IdentityUser<int>>(b =>
+            builder.Entity<Model.IdentityUser>(b =>
             {
                 b.HasKey(u => u.Id);
                 b.HasIndex(u => u.NormalizedUserName).HasName("UserNameIndex").IsUnique();
@@ -53,7 +54,7 @@ namespace IdentityServer4_Manager.Model
                 b.HasMany(u => u.Roles).WithOne().HasForeignKey(ur => ur.UserId).IsRequired();
             });
 
-            builder.Entity<IdentityRole<int>>(b =>
+            builder.Entity<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole>(b =>
             {
                 b.HasKey(r => r.Id);
                 b.HasIndex(r => r.NormalizedName).HasName("RoleNameIndex");
@@ -67,37 +68,37 @@ namespace IdentityServer4_Manager.Model
                 b.HasMany(r => r.Claims).WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();
             });
 
-            builder.Entity<IdentityUserClaim<int>>(b =>
+            builder.Entity<IdentityUserClaim<string>>(b =>
             {
                 b.HasKey(uc => uc.Id);
                 b.ToTable("UserClaims");
             });
 
-            builder.Entity<IdentityRoleClaim<int>>(b =>
+            builder.Entity<IdentityRoleClaim<string>>(b =>
             {
                 b.HasKey(rc => rc.Id);
                 b.ToTable("RoleClaims");
             });
 
-            builder.Entity<IdentityUserRole<int>>(b =>
+            builder.Entity<IdentityUserRole<string>>(b =>
             {
                 b.HasKey(r => new { r.UserId, r.RoleId });
                 b.ToTable("UserRoles");
             });
 
-            builder.Entity<IdentityUserLogin<int>>(b =>
+            builder.Entity<IdentityUserLogin<string>>(b =>
             {
                 b.HasKey(l => new { l.LoginProvider, l.ProviderKey });
                 b.ToTable("UserLogins");
             });
 
-            builder.Entity<IdentityUserToken<int>>(b =>
+            builder.Entity<IdentityUserToken<string>>(b =>
             {
                 b.HasKey(l => new { l.UserId, l.LoginProvider, l.Name });
                 b.ToTable("UserTokens");
             });
 
-            //base.OnModelCreating(builder);
+            // base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);

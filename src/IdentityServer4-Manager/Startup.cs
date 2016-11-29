@@ -45,8 +45,9 @@ namespace IdentityServer4_Manager
                 ServiceLifetime.Scoped
             );
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>()
+            services.AddIdentity<Model.IdentityUser,
+                Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole>()
+                .AddEntityFrameworkStores<Model.IdentityDbContext>()
                 ;
 
             //Add IdentityServer services
