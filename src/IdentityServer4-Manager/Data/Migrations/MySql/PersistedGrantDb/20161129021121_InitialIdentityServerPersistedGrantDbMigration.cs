@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace IdentityServer4Manager.Data.Migrations.PersistedGrantDbContext
+namespace IdentityServer4Manager.Data.Migrations.IdentityServer.PersistedGrantDb
 {
-    public partial class PersistedGrantDbContext : Migration
+    public partial class InitialIdentityServerPersistedGrantDbMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

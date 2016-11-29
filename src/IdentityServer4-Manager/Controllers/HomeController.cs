@@ -30,7 +30,8 @@ namespace IdentityServer4_Manager.Controllers
 
         public IActionResult Error()
         {
-           // IdentityDbContext db = new IdentityDbContext();
+           //IdentityDbContext db = new IdentityDbContext();
+           
 
             return View();
         }
