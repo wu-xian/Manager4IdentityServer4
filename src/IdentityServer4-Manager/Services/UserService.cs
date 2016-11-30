@@ -56,14 +56,25 @@ namespace IdentityServer4_Manager.Services
             };
         }
 
-        public async Task<IdentityResult> EditUserRole(string userId, List<string> roles)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId">the id for specified user</param>
+        /// <param name="roles">roles name after change</param>
+        /// <returns></returns>
+        public async Task<bool> EditUserRole(string userId, List<string> roles)
         {
             var usr = await _userManager.FindByIdAsync(userId);
             if (usr == null)
             {
                 throw new ParamsWrongException(nameof(usr));
             }
-            return null;
+            var userCurrentRoles = await _userManager.GetRolesAsync(usr);
+            var removeRoles = userCurrentRoles.Except(roles).ToList();
+            var addRoles = roles.Except(userCurrentRoles).ToList();
+            var removeResult = await _userManager.RemoveFromRolesAsync(usr, removeRoles);
+            var addResult = await _userManager.AddToRolesAsync(usr, addRoles);
+            return removeResult.Succeeded || addResult.Succeeded;
         }
     }
 }
