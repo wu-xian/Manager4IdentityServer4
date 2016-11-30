@@ -6,9 +6,9 @@
 function tableInit() {
 
     function queryParams(params) {
-        var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的  
-            limit: params.limit,   //页面大小  
-            offset: params.offset,  //页码  
+        var temp = {
+            limit: params.limit,
+            offset: params.offset,
 
             userName: $("#UserName").val(),
             userId: $("#UserId").val(),
@@ -16,19 +16,10 @@ function tableInit() {
         return temp;
     }
 
-    $('#tb_user').bootstrapTable({
-        url: '/user/getusers',
-        pagination: true,
-        pageNumber: 1,
-        pageSize: 5,
-        queryParams: queryParams,
-        sidePagination: "server",
-        idField: "id",
-
-        columns: [
+    var columns = [
        {
            field: 'operation',
-           title: '操作',
+           title: 'Operation',
            align: 'center',
            valign: 'middle',
            width: 100,
@@ -65,15 +56,45 @@ function tableInit() {
             valign: 'middle',
             visible: true,
             width: 250
-        }]
+        }];
+
+    function onLoadSuccess() {
+        $.app.resetLoadingBtn("#query");
+    }
+
+    function onLoadError() {
+        $.app.resetLoadingBtn("#query");
+    }
+
+    function loadingMessageFormatter() {
+        return '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>';
+    }
+
+    $('#tb_user').bootstrapTable({
+        url: '/user/getusers',
+        pagination: true,
+        pageNumber: 1,
+        pageSize: 5,
+        queryParams: queryParams,
+        sidePagination: "server",
+        onLoadSuccess: onLoadSuccess,
+        onLoadError: onLoadError,
+        formatLoadingMessage: loadingMessageFormatter,
+        idField: "id",
+        columns: columns
     });
 
 }
 
 function eventInit() {
-    //query button 
-    $(document).on("click", "#query", function () {
-        $("#tb_user").bootstrapTable('refresh');
+
+    //query button
+    $.app.setLoadingBtn("#query", function () {
+        $("#tb_user").bootstrapTable("refresh");
+    });
+
+    $(document).on('click', "#add", function () {
+
     });
 
     $(document).on("click", "#saveChange", function () {

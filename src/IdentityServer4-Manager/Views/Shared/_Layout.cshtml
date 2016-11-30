@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="~/lib/AdminLTE/bootstrap/css/bootstrap.min.css">
 
     <link href="~/css/site.css" rel="stylesheet" />
-
-    <link href="~/lib/AdminLTE/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link href="~/lib/AdminLTE/dist/css/ionicons.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    @*<link href="~/lib/AdminLTE/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" />*@
+    @*<link href="~/lib/AdminLTE/dist/css/ionicons.min.css" rel="stylesheet" />*@
+    <link href="~/lib/Ionicons/css/ionicons.css" rel="stylesheet" />
     <!-- Theme style -->
     <link rel="stylesheet" href="~/lib/AdminLTE/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -21,6 +22,7 @@
     <link rel="stylesheet" href="~/lib/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
     <link href="~/lib/bootstrap-table/dist/bootstrap-table.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -96,13 +98,13 @@
             </section>
         </div>
         <!-- /.content-wrapper -->
-        <footer class="main-footer">
+        @*<footer class="main-footer">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.3.6
             </div>
             <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
             reserved.
-        </footer>
+        </footer>*@
 
         <!-- Control Sidebar -->
         <!-- /.control-sidebar -->
@@ -110,7 +112,7 @@
     </div>
     <!-- ./wrapper -->
     <!-- jQuery 2.2.3 -->
-    <script src="~/lib/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="~/lib/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- Bootstrap 3.3.6 -->
     <script src="~/lib/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
 
@@ -121,7 +123,10 @@
 
 
     <!-- AdminLTE App -->
-    <script src="~/lib/AdminLTE/dist/js/app.min.js"></script>
+    <script src="~/lib/AdminLTE/dist/js/app.js"></script>
+
+    <!-- Site App -->
+    <script src="~/js/app.js"></script>
 
     @RenderSection("page", false)
 </body>

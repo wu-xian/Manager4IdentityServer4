@@ -1,4 +1,5 @@
 ﻿using IdentityModel;
+using IdentityServer4_Manager.Model.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,20 +21,28 @@ namespace IdentityServer4_Manager.Controllers
             _userManager = userManager;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Login()
         {
-            var usr = new Model.IdentityUser()
+            LoginViewModel loginViewModel = new LoginViewModel();
+            return View(loginViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        {
+            var usr = await _userManager.FindByNameAsync(loginViewModel.UserName);
+            if (usr == null)
             {
-                UserName = "wu-xian",
-                Email = "wu-xian.cool@qq.com",
-                PhoneNumber = "15101571730"
-            };
-            usr.PasswordHash = new PasswordHasher<Model.IdentityUser>().HashPassword(usr, "wuxian123");
-            var aa = await _userManager.CreateAsync(usr);
-            await _userManager.AddClaimAsync(await _userManager.FindByNameAsync("wu-xian"), new Claim(JwtClaimTypes.Role, "im role"));
-
-
-            return Json(aa);
+                return Content("login fail");
+            }
+            var passwordHash = new PasswordHasher<Model.IdentityUser>().HashPassword(usr, loginViewModel.Password);
+            if (string.Equals(passwordHash, usr.PasswordHash))
+            {
+                await _signInManager.SignInAsync(usr, true);
+                return Content("success");
+            }
+            return Content("wrong password");
         }
     }
 }

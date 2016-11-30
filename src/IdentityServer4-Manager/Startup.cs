@@ -139,6 +139,14 @@ namespace IdentityServer4_Manager
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Model.IdentityUser, Model.ViewModel.UserDisplay>();
+                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser<string>, Model.ViewModel.UserDisplay>();
+                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole<string>, Model.ViewModel.UserDisplay>();
+                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<int>, Model.Claim>();
+                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>, Model.Claim>();
+                cfg.CreateMap<Model.Claim, Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<int>>();
+                cfg.CreateMap<Model.Claim, Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>>();
+                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser<string>, Model.RoleUser>();
+                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole<string>, Model.UserRole>();
             });
         }
     }

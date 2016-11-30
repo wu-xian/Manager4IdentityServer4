@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace IdentityServer4_Manager.Controllers
@@ -24,6 +25,7 @@ namespace IdentityServer4_Manager.Controllers
 
         public async Task<IActionResult> GetUsers()
         {
+            System.Threading.Thread.Sleep(2000);
             return Json(new PagingResponse()
             {
                 Total = 50,

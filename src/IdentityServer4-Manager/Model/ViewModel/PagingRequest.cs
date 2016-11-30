@@ -10,5 +10,6 @@ namespace IdentityServer4_Manager.Model.ViewModel
         public int Limit { set; get; }
         public int Offset { set; get; }
         public string Order { set; get; }
+        public bool isAsc { set; get; }
     }
 }
