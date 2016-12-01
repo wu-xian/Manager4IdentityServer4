@@ -25,7 +25,8 @@ namespace IdentityServer4_Manager.Controllers
 
         public async Task<IActionResult> ClaimView(string userId)
         {
-            var claims = await _userService.GetClaims(userId);
+            var claims = (await _userService.GetClaims(userId)).ToList();
+            claims.ForEach(d => d.UserId = userId);
             return PartialView("UserClaims", claims);
         }
 
@@ -35,6 +36,16 @@ namespace IdentityServer4_Manager.Controllers
             return PartialView("UserRoles", roles);
         }
 
+        public async Task<IActionResult> AddClaimsView(string userId)
+        {
+            return PartialView("AddClaims", new Model.Claim()
+            {
+                UserId = userId,
+                ClaimType = string.Empty,
+                ClaimValue = string.Empty
+            });
+        }
+
         public async Task<IActionResult> RemoveClaim(string userId, string claimType, string claimValue)
         {
             return Json(await _userService.RemoveUserClaims(userId, claimType, claimValue));
@@ -42,7 +53,7 @@ namespace IdentityServer4_Manager.Controllers
 
         public async Task<IActionResult> CreateClaim(string userId, string claimType, string claimValue)
         {
-            return Json(await _userService.CreateClaims(userId, claimType, claimValue));
+            return Json(await _userService.CreateUserClaims(userId, claimType, claimValue));
         }
 
         public async Task<IActionResult> GetUsers(PagingRequest request, string userId, string userName)

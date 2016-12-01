@@ -13,7 +13,6 @@ function getUserClaims(userId) {
             userId: userId
         },
         success: function (responseView) {
-            $("#modalTitle").html("User Claims");
             $("#contentBody").html("");
             $("#contentBody").html(responseView);
             $("#userModal").modal('show');
@@ -32,7 +31,6 @@ function getUserRoles(userId) {
             userId: userId
         },
         success: function (responseView) {
-            $("#modalTitle").html("User Roles");
             $("#contentBody").html("");
             $("#contentBody").html(responseView);
             $("#userModal").modal('show');
@@ -43,8 +41,7 @@ function getUserRoles(userId) {
     })
 }
 
-function removeUserClaim(claimType, claimValue, userId) {
-    userId = 'e34c0c82-a66f-4ccb-a420-3acff32baef7';
+function removeUserClaim(userId,claimType, claimValue) {
     $.ajax({
         url: '/user/removeClaim',
         method: 'GET',
@@ -55,6 +52,24 @@ function removeUserClaim(claimType, claimValue, userId) {
         },
         success: function (responseData) {
             getUserClaims(userId);
+        },
+        error: function (info, execption) {
+            alert("请求失败 , info:" + info + ",execption:" + execption);
+        }
+    });
+}
+
+function addUserClaimsView(userId) {
+    $.ajax({
+        url: '/user/addClaimsView',
+        method: 'GET',
+        data: {
+            userId: userId
+        },
+        success: function (responseView) {
+            $("#contentBody").html("");
+            $("#contentBody").html(responseView);
+            $("#userModal").modal('show');
         },
         error: function (info, execption) {
             alert("请求失败 , info:" + info + ",execption:" + execption);
@@ -84,11 +99,9 @@ function tableInit() {
         return '<div class="btn-group">' +
         '<button title="' + rolesCount + ' roles" onclick="getUserRoles(\'' + row.id + '\')"><i class="fa fa-users"></i>' + rolesCount + '</button>' +
         '<button title="' + claimsCount + ' claims" onclick="getUserClaims(\'' + row.id + '\')"><i class="glyphicon glyphicon-list"></i>' + claimsCount + '</button>' +
-        '<button><i class="glyphicon glyphicon-cog"></i></button>' +
+        '<button title="add claims"  onclick="addUserClaimsView(\'' + row.id + '\')"><i class="fa fa-plus"></i></button>' +
         '</div>';
     }
-
-
 
     var columns = [
        {
@@ -172,21 +185,21 @@ function eventInit() {
         $("#userModal").modal('show');
     });
 
-    $(document).on("click", "#saveChange", function () {
-        var userModel = {
-            userId: $("#modifyBody #UserId").val(),
-            roleId: $("#modifyBody #RoleId").val(),
-            realName: $("#modifyBody #RealName").val()
-        };
-        $.ajax({
-            url: '/user/getusers',
-            data: userModel,
-            success: function (response) {
-                $.galaxies.pipeline(response);
-            },
-            error: function (msg) {
-                alert(JSON.stringify(msg));
-            }
-        })
-    });
+    //$(document).on("click", "#saveChange", function () {
+    //    var userModel = {
+    //        userId: $("#modifyBody #UserId").val(),
+    //        roleId: $("#modifyBody #RoleId").val(),
+    //        realName: $("#modifyBody #RealName").val()
+    //    };
+    //    $.ajax({
+    //        url: '/user/getusers',
+    //        data: userModel,
+    //        success: function (response) {
+    //            $.galaxies.pipeline(response);
+    //        },
+    //        error: function (msg) {
+    //            alert(JSON.stringify(msg));
+    //        }
+    //    })
+    //});
 }

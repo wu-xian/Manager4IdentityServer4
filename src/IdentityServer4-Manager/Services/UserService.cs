@@ -130,7 +130,7 @@ namespace IdentityServer4_Manager.Services
             return await _userManager.RemoveClaimsAsync(usr, removeClaims);
         }
 
-        public async Task<IdentityResult> CreateClaims(string userId, string claimType, string claimValue)
+        public async Task<IdentityResult> CreateUserClaims(string userId, string claimType, string claimValue)
         {
             var usr = await _userManager.FindByIdAsync(userId);
             if (usr == null)
