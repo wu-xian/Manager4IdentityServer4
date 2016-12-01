@@ -13,6 +13,7 @@ using System.Reflection;
 using IdentityServer4_Manager.Model;
 using AutoMapper;
 using IdentityServer4_Manager.Services;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace IdentityServer4_Manager
 {
@@ -45,7 +46,7 @@ namespace IdentityServer4_Manager
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            services.AddDbContext<IdentityDbContext>(options =>
+            services.AddDbContext<Model.IdentityDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection")),
                 ServiceLifetime.Scoped
             );
@@ -118,7 +119,7 @@ namespace IdentityServer4_Manager
                 .AddOperationalStore(builder =>
                 builder.UseMySql(Configuration.GetConnectionString("DefaultConnection"), options =>
                  options.MigrationsAssembly(migrationsAssembly)))
-                .AddAspNetIdentity<IdentityUser>()
+                .AddAspNetIdentity<Model.IdentityUser>()
                 ;
         }
 
@@ -130,7 +131,7 @@ namespace IdentityServer4_Manager
 
                 serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
 
-                serviceScope.ServiceProvider.GetRequiredService<IdentityDbContext>().Database.Migrate();
+                serviceScope.ServiceProvider.GetRequiredService<Model.IdentityDbContext>().Database.Migrate();
             }
         }
 
@@ -138,15 +139,43 @@ namespace IdentityServer4_Manager
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Model.IdentityUser, Model.ViewModel.UserDisplay>();
-                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser<string>, Model.ViewModel.UserDisplay>();
-                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole<string>, Model.ViewModel.UserDisplay>();
-                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<int>, Model.Claim>();
-                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>, Model.Claim>();
-                cfg.CreateMap<Model.Claim, Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<int>>();
-                cfg.CreateMap<Model.Claim, Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>>();
-                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser<string>, Model.RoleUser>();
-                cfg.CreateMap<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole<string>, Model.UserRole>();
+                #region IdentityUser => UserDisplay
+                cfg.CreateMap<Model.IdentityUser, Model.ViewModel.UserDisplay>()
+                    .ForMember(ud => ud.UserClaims, iu => iu.MapFrom(s => s.Claims))
+                    .ForMember(d => d.UserRoles, u => u.MapFrom(item => item.Roles))
+                    ;
+                //IdentityUserClaim => Claim
+                cfg.CreateMap<IList<IdentityUserClaim<string>>, IList<Model.Claim>>();
+                cfg.CreateMap<IdentityUserClaim<string>, Model.Claim>()
+                    .ForMember(d => d.ClaimType, u => u.MapFrom(item => item.ClaimType))
+                    .ForMember(d => d.ClaimValue, u => u.MapFrom(item => item.ClaimValue))
+                    ;
+                //IdentityUserClaim => Claim
+                cfg.CreateMap<IList<IdentityUserRole<string>>, IList<Model.UserRole>>();
+                cfg.CreateMap<IdentityUserRole<string>, Model.UserRole>()
+                    .ForMember(d => d.RoleId, u => u.MapFrom(item => item.RoleId))
+                    ;
+                #endregion
+
+                #region Security Claim <=> Claim
+
+                cfg.CreateMap<System.Security.Claims.Claim, Model.Claim>()
+                    .ForMember(d => d.ClaimType, u => u.MapFrom(item => item.Type))
+                    .ForMember(d => d.ClaimValue, u => u.MapFrom(item => item.Value))
+                    ;
+                cfg.CreateMap<Model.Claim, System.Security.Claims.Claim>()
+                    .ForMember(d => d.Type, u => u.MapFrom(item => item.ClaimType))
+                    .ForMember(d => d.Value, u => u.MapFrom(item => item.ClaimValue))
+                    ;
+
+                #endregion
+
+                cfg.CreateMap<IdentityUser<string>, Model.ViewModel.UserDisplay>();
+                cfg.CreateMap<IdentityRole<string>, Model.ViewModel.UserDisplay>();
+                cfg.CreateMap<IdentityRoleClaim<int>, Model.Claim>();
+                cfg.CreateMap<Model.Claim, IdentityUserClaim<int>>();
+                cfg.CreateMap<Model.Claim, IdentityRoleClaim<int>>();
+                cfg.CreateMap<IdentityUser<string>, Model.RoleUser>();
             });
         }
     }

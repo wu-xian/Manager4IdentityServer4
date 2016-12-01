@@ -12,7 +12,6 @@ namespace IdentityServer4_Manager.Model.ViewModel
         public string Email { set; get; }
         public string PhoneNumber { set; get; }
 
-        public int ClaimCount { set; get; }
         public List<Model.UserRole> UserRoles { set; get; }
         public List<Model.Claim> UserClaims { set; get; }
     }

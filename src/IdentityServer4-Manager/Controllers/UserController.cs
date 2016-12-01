@@ -23,14 +23,33 @@ namespace IdentityServer4_Manager.Controllers
             return View();
         }
 
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> ClaimView(string userId)
+        {
+            var claims = await _userService.GetClaims(userId);
+            return PartialView("UserClaims", claims);
+        }
+
+        public async Task<IActionResult> RoleView(string userId)
+        {
+            var roles = await _userService.GetRoles(userId);
+            return PartialView("UserRoles", roles);
+        }
+
+        public async Task<IActionResult> RemoveClaim(string userId, string claimType, string claimValue)
+        {
+            return Json(await _userService.RemoveUserClaims(userId, claimType, claimValue));
+        }
+
+        public async Task<IActionResult> CreateClaim(string userId, string claimType, string claimValue)
+        {
+            return Json(await _userService.CreateClaims(userId, claimType, claimValue));
+        }
+
+        public async Task<IActionResult> GetUsers(PagingRequest request, string userId, string userName)
         {
             System.Threading.Thread.Sleep(2000);
-            return Json(new PagingResponse()
-            {
-                Total = 50,
-                Rows = _userService.Get()
-            });
+            var result = await _userService.GetDisplayUsers(request, userId, userName);
+            return Json(result);
         }
 
         public async Task<IActionResult> AddUser()

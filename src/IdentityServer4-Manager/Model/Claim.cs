@@ -8,6 +8,6 @@ namespace IdentityServer4_Manager.Model
     public class Claim
     {
         public string ClaimType { set; get; }
-        public string ClaimName { set; get; }
+        public string ClaimValue { set; get; }
     }
 }

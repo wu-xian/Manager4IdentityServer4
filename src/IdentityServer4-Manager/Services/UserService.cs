@@ -39,6 +39,8 @@ namespace IdentityServer4_Manager.Services
         {
             int totalCount = 0;
             var users = await _userManager.Users
+                    .Include(d => d.Claims)
+                    .Include(d => d.Roles)
                     .Paged(
                     d =>
                         (string.IsNullOrEmpty(userId) || d.Id == userId) &&
@@ -56,6 +58,24 @@ namespace IdentityServer4_Manager.Services
                 Total = totalCount,
                 Rows = users
             };
+        }
+
+        public async Task<IList<Model.Claim>> GetClaims(string userId)
+        {
+            var usr = await _userManager.FindByIdAsync(userId);
+            if (usr == null)
+                throw new ParamsWrongException(nameof(userId));
+            var claims = await _userManager.GetClaimsAsync(usr);
+            return Mapper.Map<IList<Model.Claim>>(claims);
+        }
+
+        public async Task<IList<string>> GetRoles(string userId)
+        {
+            var usr = await _userManager.FindByIdAsync(userId);
+            if (usr == null)
+                throw new ParamsWrongException(nameof(userId));
+            var roles = await _userManager.GetRolesAsync(usr);
+            return roles;
         }
 
         /// <summary>
@@ -101,14 +121,21 @@ namespace IdentityServer4_Manager.Services
             return await _userManager.AddClaimsAsync(usr, userClaims);
         }
 
-        public async Task<IdentityResult> RemoveUserClaims(string userId, Dictionary<string,string> claims)
+        public async Task<IdentityResult> RemoveUserClaims(string userId, string claimType, string claimValue)
         {
             var usr = await _userManager.FindByIdAsync(userId);
             if (usr == null)
                 throw new ParamsWrongException(nameof(userId));
-            var removeClaims = (await _userManager.GetClaimsAsync(usr))
-                .Where(d=>d.ValueType==;
-            await _userManager.RemoveClaimsAsync(usr,)
+            var removeClaims = (await _userManager.GetClaimsAsync(usr)).Where(d => d.Value == claimValue && d.Type == claimType);
+            return await _userManager.RemoveClaimsAsync(usr, removeClaims);
+        }
+
+        public async Task<IdentityResult> CreateClaims(string userId, string claimType, string claimValue)
+        {
+            var usr = await _userManager.FindByIdAsync(userId);
+            if (usr == null)
+                throw new ParamsWrongException(nameof(userId));
+            return await _userManager.AddClaimAsync(usr, new System.Security.Claims.Claim(claimType, claimValue));
         }
     }
 }
