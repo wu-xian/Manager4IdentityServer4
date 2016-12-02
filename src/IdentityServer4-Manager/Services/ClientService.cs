@@ -7,5 +7,9 @@ namespace IdentityServer4_Manager.Services
 {
     public class ClientService
     {
+        public ClientService()
+        {
+            
+        }
     }
 }

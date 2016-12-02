@@ -3,78 +3,92 @@
     eventInit();
 })
 
-var currentUserId = '';
-
 function getUserClaims(userId) {
-    $.ajax({
-        url: '/user/claimView',
-        method: 'GET',
-        data: {
-            userId: userId
-        },
-        success: function (responseView) {
-            $("#contentBody").html("");
-            $("#contentBody").html(responseView);
-            $("#userModal").modal('show');
-        },
-        error: function (info, execption) {
-            alert("请求失败 , info:" + info + ",execption:" + execption);
-        }
-    })
+    $("#userModal").modal('show');
+    $("#contentBody").html($.app.loadingConstant);
+    $.app.get('/user/claimView',
+            {
+                userId: userId
+            },
+            function (responseView) {
+                $("#contentBody").html("");
+                $("#contentBody").html(responseView);
+            },
+            {});
 }
 
 function getUserRoles(userId) {
-    $.ajax({
-        url: '/user/roleView',
-        method: 'GET',
-        data: {
+    $("#userModal").modal('show');
+    $("#contentBody").html($.app.loadingConstant);
+    $.app.get('/user/roleView',
+        {
             userId: userId
         },
-        success: function (responseView) {
+        function (responseView) {
             $("#contentBody").html("");
             $("#contentBody").html(responseView);
             $("#userModal").modal('show');
         },
-        error: function (info, execption) {
-            alert("请求失败 , info:" + info + ",execption:" + execption);
-        }
-    })
+        {});
 }
 
-function removeUserClaim(userId,claimType, claimValue) {
-    $.ajax({
-        url: '/user/removeClaim',
-        method: 'GET',
-        data: {
-            claimType: claimType,
-            claimValue: claimValue,
-            userId: userId
-        },
-        success: function (responseData) {
-            getUserClaims(userId);
-        },
-        error: function (info, execption) {
-            alert("请求失败 , info:" + info + ",execption:" + execption);
-        }
-    });
+function removeUserClaim(userId, claimType, claimValue) {
+    $.app.get('/user/removeClaim',
+    {
+        claimType: claimType,
+        claimValue: claimValue,
+        userId: userId
+    },
+    function (responseView) {
+        getUserClaims(userId);
+    },
+    {});
 }
 
 function addUserClaimsView(userId) {
-    $.ajax({
-        url: '/user/addClaimsView',
-        method: 'GET',
-        data: {
+    $("#userModal").modal('show');
+    $("#contentBody").html($.app.loadingConstant);
+    $.app.get('/user/addClaimsView',
+        {
             userId: userId
         },
-        success: function (responseView) {
+        function (responseView) {
             $("#contentBody").html("");
             $("#contentBody").html(responseView);
             $("#userModal").modal('show');
         },
-        error: function (info, execption) {
-            alert("请求失败 , info:" + info + ",execption:" + execption);
-        }
-    });
+        {});
+}
+
+function addUserRoleView(userId) {
+    $("#userModal").modal('show');
+    $("#contentBody").html($.app.loadingConstant);
+    $.app.get('/user/addUserRoleView',
+        {
+            userId: userId
+        },
+        function (responseView) {
+            $("#contentBody").html("");
+            $("#contentBody").html(responseView);
+            $("#userModal").modal('show');
+        },
+        {});
+}
+
+function addUserRoles(userId, roleName) {
+    $("#userModal").modal('show');
+    $("#contentBody").html($.app.loadingConstant);
+    $.app.get('/user/addToRole',
+        {
+            userId: userId,
+            roleName: roleName
+        },
+        function (responseView) {
+            $("#contentBody").html("");
+            $("#contentBody").html(responseView);
+            $("#userModal").modal('show');
+        },
+        {});
 }
 
 function tableInit() {
@@ -92,7 +106,6 @@ function tableInit() {
         return temp;
     }
 
-
     function operationFormatter(value, row, index) {
         var claimsCount = row.userClaims.length;
         var rolesCount = row.userRoles.length;
@@ -100,6 +113,7 @@ function tableInit() {
         '<button title="' + rolesCount + ' roles" onclick="getUserRoles(\'' + row.id + '\')"><i class="fa fa-users"></i>' + rolesCount + '</button>' +
         '<button title="' + claimsCount + ' claims" onclick="getUserClaims(\'' + row.id + '\')"><i class="glyphicon glyphicon-list"></i>' + claimsCount + '</button>' +
         '<button title="add claims"  onclick="addUserClaimsView(\'' + row.id + '\')"><i class="fa fa-plus"></i></button>' +
+        '<button title="add roles"  onclick="addUserRoleView(\'' + row.id + '\')"><i class="fa fa-plus-square"></i></button>' +
         '</div>';
     }
 
@@ -184,22 +198,4 @@ function eventInit() {
         $("#contentBody").append("123");
         $("#userModal").modal('show');
     });
-
-    //$(document).on("click", "#saveChange", function () {
-    //    var userModel = {
-    //        userId: $("#modifyBody #UserId").val(),
-    //        roleId: $("#modifyBody #RoleId").val(),
-    //        realName: $("#modifyBody #RealName").val()
-    //    };
-    //    $.ajax({
-    //        url: '/user/getusers',
-    //        data: userModel,
-    //        success: function (response) {
-    //            $.galaxies.pipeline(response);
-    //        },
-    //        error: function (msg) {
-    //            alert(JSON.stringify(msg));
-    //        }
-    //    })
-    //});
 }

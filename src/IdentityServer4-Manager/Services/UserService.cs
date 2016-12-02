@@ -24,17 +24,6 @@ namespace IdentityServer4_Manager.Services
             _roleManager = roleManager;
         }
 
-        public List<UserDisplay> Get()
-        {
-            return _userManager.Users.Select(u =>
-                Mapper.Map<UserDisplay>(u)).ToList();
-        }
-
-        public async Task<IdentityResult> Add(Model.IdentityUser user)
-        {
-            return await _userManager.CreateAsync(user);
-        }
-
         public async Task<PagingResponse> GetDisplayUsers(PagingRequest pagingRequest, string userId, string userName)
         {
             int totalCount = 0;
@@ -72,10 +61,21 @@ namespace IdentityServer4_Manager.Services
         public async Task<IList<string>> GetRoles(string userId)
         {
             var usr = await _userManager.FindByIdAsync(userId);
-            if (usr == null)
-                throw new ParamsWrongException(nameof(userId));
             var roles = await _userManager.GetRolesAsync(usr);
             return roles;
+        }
+
+        public async Task<IdentityResult> RemoveUserRole(string userId, string roleName)
+        {
+            var usr = await _userManager.FindByIdAsync(userId);
+            return await _userManager.RemoveFromRoleAsync(usr, roleName);
+
+        }
+
+        public async Task<IdentityResult> CreateUserRole(string userId, string roleName)
+        {
+            var usr = await _userManager.FindByIdAsync(userId);
+            return await _userManager.AddToRoleAsync(usr, roleName);
         }
 
         /// <summary>
@@ -87,10 +87,6 @@ namespace IdentityServer4_Manager.Services
         public async Task<bool> EditUserRole(string userId, List<string> roles)
         {
             var usr = await _userManager.FindByIdAsync(userId);
-            if (usr == null)
-            {
-                throw new ParamsWrongException(nameof(userId));
-            }
             var userCurrentRoles = await _userManager.GetRolesAsync(usr);
             var removeRoles = userCurrentRoles.Except(roles).ToList();
             var addRoles = roles.Except(userCurrentRoles).ToList();
@@ -116,16 +112,12 @@ namespace IdentityServer4_Manager.Services
         {
             var userClaims = claims.Select(d => Mapper.Map<IdentityUserClaim<int>>(d).ToClaim()).ToList();
             var usr = await _userManager.FindByIdAsync(userId);
-            if (usr == null)
-                throw new ParamsWrongException(nameof(userId));
             return await _userManager.AddClaimsAsync(usr, userClaims);
         }
 
         public async Task<IdentityResult> RemoveUserClaims(string userId, string claimType, string claimValue)
         {
             var usr = await _userManager.FindByIdAsync(userId);
-            if (usr == null)
-                throw new ParamsWrongException(nameof(userId));
             var removeClaims = (await _userManager.GetClaimsAsync(usr)).Where(d => d.Value == claimValue && d.Type == claimType);
             return await _userManager.RemoveClaimsAsync(usr, removeClaims);
         }
@@ -133,8 +125,6 @@ namespace IdentityServer4_Manager.Services
         public async Task<IdentityResult> CreateUserClaims(string userId, string claimType, string claimValue)
         {
             var usr = await _userManager.FindByIdAsync(userId);
-            if (usr == null)
-                throw new ParamsWrongException(nameof(userId));
             return await _userManager.AddClaimAsync(usr, new System.Security.Claims.Claim(claimType, claimValue));
         }
     }
