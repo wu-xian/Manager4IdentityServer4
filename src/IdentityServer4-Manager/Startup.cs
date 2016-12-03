@@ -14,6 +14,7 @@ using IdentityServer4_Manager.Model;
 using AutoMapper;
 using IdentityServer4_Manager.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using IdentityServer4.EntityFramework.Entities;
 
 namespace IdentityServer4_Manager
 {
@@ -66,7 +67,7 @@ namespace IdentityServer4_Manager
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //init DB
+            //initialize DB
             InitializeDatabase(app);
 
             //automapper
@@ -106,6 +107,7 @@ namespace IdentityServer4_Manager
         private void AddServices(IServiceCollection services)
         {
             services.AddScoped<UserService>();
+            services.AddScoped<ClientService>();
         }
 
         private void AddIdentityServer(IServiceCollection services)
@@ -170,12 +172,23 @@ namespace IdentityServer4_Manager
 
                 #endregion
 
+                #region ??
                 cfg.CreateMap<IdentityUser<string>, Model.ViewModel.UserDisplay>();
                 cfg.CreateMap<IdentityRole<string>, Model.ViewModel.UserDisplay>();
                 cfg.CreateMap<IdentityRoleClaim<int>, Model.Claim>();
                 cfg.CreateMap<Model.Claim, IdentityUserClaim<int>>();
                 cfg.CreateMap<Model.Claim, IdentityRoleClaim<int>>();
-                cfg.CreateMap<IdentityUser<string>, Model.RoleUser>();
+                cfg.CreateMap<IdentityUser<string>, Model.RoleUser>(); 
+                #endregion
+
+                #region Client => ClientDisplay
+                cfg.CreateMap<ClientScope, ClientScope>()
+            .ForMember(d => d.Client, u => u.Ignore());
+                cfg.CreateMap<Client, Model.ViewModel.ClientDisplay>()
+                    .ForMember(d => d.Scopes, u => u.MapFrom(item => item.AllowedScopes))
+                #endregion
+
+                ;
             });
         }
     }

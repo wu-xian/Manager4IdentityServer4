@@ -3,12 +3,12 @@
     eventInit();
 })
 
-function getUserClaims(userId) {
-    $("#userModal").modal('show');
+function getUserClaims(ClientId) {
+    $("#clientModal").modal('show');
     $("#contentBody").html($.app.loadingConstant);
     $.app.get('/user/claimView',
             {
-                userId: userId
+                ClientId: ClientId
             },
             function (responseView) {
                 $("#contentBody").html("");
@@ -17,72 +17,102 @@ function getUserClaims(userId) {
             {});
 }
 
-function getUserRoles(userId) {
-    $("#userModal").modal('show');
+function getUserRoles(ClientId) {
+    $("#clientModal").modal('show');
     $("#contentBody").html($.app.loadingConstant);
     $.app.get('/user/roleView',
         {
-            userId: userId
+            ClientId: ClientId
         },
         function (responseView) {
             $("#contentBody").html("");
             $("#contentBody").html(responseView);
+            $("#clientModal").modal('show');
         },
         {});
 }
 
-function removeUserClaim(userId, claimType, claimValue) {
+function removeUserClaim(ClientId, claimType, claimValue) {
     $.app.get('/user/removeClaim',
     {
         claimType: claimType,
         claimValue: claimValue,
-        userId: userId
+        ClientId: ClientId
     },
     function (responseView) {
-        getUserClaims(userId);
+        getUserClaims(ClientId);
     },
     {});
 }
 
-function addUserClaimsView(userId) {
-    $("#userModal").modal('show');
+function addUserClaimsView(ClientId) {
+    $("#clientModal").modal('show');
     $("#contentBody").html($.app.loadingConstant);
     $.app.get('/user/addClaimsView',
         {
-            userId: userId
+            ClientId: ClientId
         },
         function (responseView) {
             $("#contentBody").html("");
             $("#contentBody").html(responseView);
+            $("#clientModal").modal('show');
         },
         {});
 }
 
-function addUserRoleView(userId) {
-    $("#userModal").modal('show');
+function addUserRoleView(ClientId) {
+    $("#clientModal").modal('show');
     $("#contentBody").html($.app.loadingConstant);
     $.app.get('/user/addUserRoleView',
         {
-            userId: userId
+            ClientId: ClientId
         },
         function (responseView) {
             $("#contentBody").html("");
             $("#contentBody").html(responseView);
+            $("#clientModal").modal('show');
         },
         {});
 }
 
-function addUserRoles(userId, roleName) {
-    $("#userModal").modal('show');
+function addUserRoles(ClientId, roleName) {
+    $("#clientModal").modal('show');
     $("#contentBody").html($.app.loadingConstant);
     $.app.get('/user/addToRole',
         {
-            userId: userId,
+            ClientId: ClientId,
             roleName: roleName
         },
         function (responseView) {
             $("#contentBody").html("");
             $("#contentBody").html(responseView);
+            $("#clientModal").modal('show');
+        },
+        {});
+}
+
+function getClient(id) {
+    $("#clientModal").modal('show');
+    $("#contentBody").html($.app.loadingConstant);
+    $.app.get('/client/get',
+        {
+            Id: id
+        },
+        function (responseView) {
+            $("#contentBody").html("");
+            $("#contentBody").html(responseView);
+            $("#clientModal").modal('show');
+        },
+        {});
+}
+
+function removeClient(id) {
+    $.app.get('/client/removeClient',
+        {
+            Id: id
+        },
+        function (responseData) {
+            $.app.msgBox(responseData);
         },
         {});
 }
@@ -96,20 +126,18 @@ function tableInit() {
             order: 'Id',
             isAsc: true,
 
-            userName: $("#UserName").val(),
-            userId: $("#UserId").val(),
+            clientName: $("#clientName").val(),
+            clientId: $("#clientId").val(),
         };
         return temp;
     }
 
     function operationFormatter(value, row, index) {
-        var claimsCount = row.userClaims.length;
-        var rolesCount = row.userRoles.length;
+        var scopeCount = row.scopes.length;
         return '<div class="btn-group">' +
-        '<button title="' + rolesCount + ' roles" onclick="getUserRoles(\'' + row.id + '\')"><i class="fa fa-users"></i>' + rolesCount + '</button>' +
-        '<button title="' + claimsCount + ' claims" onclick="getUserClaims(\'' + row.id + '\')"><i class="glyphicon glyphicon-list"></i>' + claimsCount + '</button>' +
-        '<button title="add claims"  onclick="addUserClaimsView(\'' + row.id + '\')"><i class="fa fa-plus"></i></button>' +
-        '<button title="add roles"  onclick="addUserRoleView(\'' + row.id + '\')"><i class="fa fa-plus-square"></i></button>' +
+        '<button title="' + scopeCount + ' scopes" onclick="getUserRoles(\'' + row.id + '\')"><i class="fa fa-bars"></i>' + scopeCount + '</button>' +
+        '<button title"client detaiil" onclick="getClient(\'' + row.id + '\')"><i class="fa fa-bars"></i></button>' +
+        '<button title"client detaiil" onclick="removeClient(\'' + row.id + '\')"><i class="fa fa-trash"></i></button>' +
         '</div>';
     }
 
@@ -127,11 +155,11 @@ function tableInit() {
             title: 'ID',
             align: 'center',
             valign: 'middle',
-            visible: true,
+            visible: false,
             width: 150
         },
         {
-            field: 'userName',
+            field: 'clientName',
             title: 'User Name',
             align: 'center',
             valign: 'middle',
@@ -139,16 +167,16 @@ function tableInit() {
             width: 250
         },
         {
-            field: 'email',
-            title: 'Email',
+            field: 'clientId',
+            title: 'Client ID',
             align: 'center',
             valign: 'middle',
             visible: true,
             width: 250
         },
         {
-            field: 'phoneNumber',
-            title: 'Phone Number',
+            field: 'clientUri',
+            title: 'Client URI',
             align: 'center',
             valign: 'middle',
             visible: true,
@@ -167,8 +195,8 @@ function tableInit() {
         return '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>';
     }
 
-    $('#tb_user').bootstrapTable({
-        url: '/user/getusers',
+    $('#tb_client').bootstrapTable({
+        url: '/client/getclients',
         pagination: true,
         pageNumber: 1,
         pageSize: 5,
@@ -187,11 +215,18 @@ function eventInit() {
 
     //query button
     $.app.setLoadingBtn("#query", function () {
-        $("#tb_user").bootstrapTable("refresh");
+        $("#tb_client").bootstrapTable("refresh");
     });
 
     $(document).on('click', "#add", function () {
-        $("#contentBody").append("123");
-        $("#userModal").modal('show');
+        $("#clientModal").modal('show');
+        $("#contentBody").html($.app.loadingConstant);
+        $.app.get('/client/addClientView',
+            {},
+            function (responseView) {
+                $("#contentBody").html("");
+                $("#contentBody").html(responseView);
+            },
+            {});
     });
 }
