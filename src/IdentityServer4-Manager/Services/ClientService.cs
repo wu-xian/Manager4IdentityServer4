@@ -71,5 +71,10 @@ namespace IdentityServer4_Manager.Services
             var dbResult = _idb.Clients.Where(d => d.Id == id).AsNoTracking().FirstOrDefault();
             return dbResult;
         }
+
+        public async Task<List<ClientScope>> GetScopes(int id)
+        {
+            _idb.
+        }
     }
 }

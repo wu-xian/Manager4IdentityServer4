@@ -13,6 +13,6 @@ namespace IdentityServer4_Manager.Model.ViewModel
         public string ClientName { set; get; }
         public string ClientURI { set; get; }
 
-        public List<ClientScope> Scopes { set; get; }
+        public int ScopeCount { set; get; }
     }
 }

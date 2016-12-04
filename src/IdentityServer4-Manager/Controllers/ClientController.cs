@@ -30,6 +30,11 @@ namespace IdentityServer4_Manager.Controllers
             return Json(_clientService.GetPaged(request, clientId, clientName));
         }
 
+        public async Task<IActionResult> GetScopes(int id)
+        {
+
+        }
+
         public async Task<IActionResult> Get(int id)
         {
             var client = _clientService.Get(id);

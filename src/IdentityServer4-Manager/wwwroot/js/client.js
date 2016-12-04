@@ -3,90 +3,16 @@
     eventInit();
 })
 
-function getUserClaims(ClientId) {
+function getScopes(id) {
     $("#clientModal").modal('show');
     $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/user/claimView',
-            {
-                ClientId: ClientId
-            },
-            function (responseView) {
-                $("#contentBody").html("");
-                $("#contentBody").html(responseView);
-            },
-            {});
-}
-
-function getUserRoles(ClientId) {
-    $("#clientModal").modal('show');
-    $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/user/roleView',
+    $.app.get('/client/getScopes',
         {
-            ClientId: ClientId
+            id: id,
         },
         function (responseView) {
             $("#contentBody").html("");
             $("#contentBody").html(responseView);
-            $("#clientModal").modal('show');
-        },
-        {});
-}
-
-function removeUserClaim(ClientId, claimType, claimValue) {
-    $.app.get('/user/removeClaim',
-    {
-        claimType: claimType,
-        claimValue: claimValue,
-        ClientId: ClientId
-    },
-    function (responseView) {
-        getUserClaims(ClientId);
-    },
-    {});
-}
-
-function addUserClaimsView(ClientId) {
-    $("#clientModal").modal('show');
-    $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/user/addClaimsView',
-        {
-            ClientId: ClientId
-        },
-        function (responseView) {
-            $("#contentBody").html("");
-            $("#contentBody").html(responseView);
-            $("#clientModal").modal('show');
-        },
-        {});
-}
-
-function addUserRoleView(ClientId) {
-    $("#clientModal").modal('show');
-    $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/user/addUserRoleView',
-        {
-            ClientId: ClientId
-        },
-        function (responseView) {
-            $("#contentBody").html("");
-            $("#contentBody").html(responseView);
-            $("#clientModal").modal('show');
-        },
-        {});
-}
-
-function addUserRoles(ClientId, roleName) {
-    $("#clientModal").modal('show');
-    $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/user/addToRole',
-        {
-            ClientId: ClientId,
-            roleName: roleName
-        },
-        function (responseView) {
-            $("#contentBody").html("");
-            $("#contentBody").html(responseView);
-            $("#clientModal").modal('show');
         },
         {});
 }
@@ -101,7 +27,6 @@ function getClient(id) {
         function (responseView) {
             $("#contentBody").html("");
             $("#contentBody").html(responseView);
-            $("#clientModal").modal('show');
         },
         {});
 }
@@ -133,9 +58,9 @@ function tableInit() {
     }
 
     function operationFormatter(value, row, index) {
-        var scopeCount = row.scopes.length;
+        var scopeCount = row.scopeCount;
         return '<div class="btn-group">' +
-        '<button title="' + scopeCount + ' scopes" onclick="getUserRoles(\'' + row.id + '\')"><i class="fa fa-bars"></i>' + scopeCount + '</button>' +
+        '<button title="' + scopeCount + ' scopes" onclick="getScopes(\'' + row.id + '\')"><i class="fa fa-bars"></i>' + scopeCount + '</button>' +
         '<button title"client detaiil" onclick="getClient(\'' + row.id + '\')"><i class="fa fa-bars"></i></button>' +
         '<button title"client detaiil" onclick="removeClient(\'' + row.id + '\')"><i class="fa fa-trash"></i></button>' +
         '</div>';

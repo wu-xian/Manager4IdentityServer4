@@ -178,14 +178,14 @@ namespace IdentityServer4_Manager
                 cfg.CreateMap<IdentityRoleClaim<int>, Model.Claim>();
                 cfg.CreateMap<Model.Claim, IdentityUserClaim<int>>();
                 cfg.CreateMap<Model.Claim, IdentityRoleClaim<int>>();
-                cfg.CreateMap<IdentityUser<string>, Model.RoleUser>(); 
+                cfg.CreateMap<IdentityUser<string>, Model.RoleUser>();
                 #endregion
 
                 #region Client => ClientDisplay
                 cfg.CreateMap<ClientScope, ClientScope>()
             .ForMember(d => d.Client, u => u.Ignore());
                 cfg.CreateMap<Client, Model.ViewModel.ClientDisplay>()
-                    .ForMember(d => d.Scopes, u => u.MapFrom(item => item.AllowedScopes))
+                    .ForMember(d => d.ScopeCount, u => u.MapFrom(item => item.AllowedScopes.Count()))
                 #endregion
 
                 ;
