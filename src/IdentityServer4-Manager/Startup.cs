@@ -15,6 +15,7 @@ using AutoMapper;
 using IdentityServer4_Manager.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using IdentityServer4.EntityFramework.Entities;
+using IdentityServer4.EntityFramework.Mappers;
 
 namespace IdentityServer4_Manager
 {
@@ -44,6 +45,8 @@ namespace IdentityServer4_Manager
             //add host services
             AddServices(services);
 
+            services.AddDistributedMemoryCache();
+
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
@@ -59,8 +62,7 @@ namespace IdentityServer4_Manager
 
             //Add IdentityServer services
             AddIdentityServer(services);
-
-
+            
             services.AddMvc();
         }
 
@@ -107,6 +109,7 @@ namespace IdentityServer4_Manager
         private void AddServices(IServiceCollection services)
         {
             services.AddScoped<UserService>();
+            services.AddScoped<UserLoginService>(); 
             services.AddScoped<ClientService>();
         }
 
@@ -131,9 +134,45 @@ namespace IdentityServer4_Manager
             {
                 serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
 
-                serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
+                var configContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+                configContext.Database.Migrate();
 
-                serviceScope.ServiceProvider.GetRequiredService<Model.IdentityDbContext>().Database.Migrate();
+                var identityContext = serviceScope.ServiceProvider.GetRequiredService<Model.IdentityDbContext>();
+                identityContext.Database.Migrate();
+
+                if (!configContext.ApiResources.Any())
+                {
+                    foreach (var item in Config.ApiResources.Get())
+                    {
+                        configContext.ApiResources.Add(item.ToEntity());
+                    }
+                }
+
+                if (!configContext.Clients.Any())
+                {
+                    foreach (var item in Config.Clients.Get())
+                    {
+                        configContext.Clients.Add(item.ToEntity());
+                    }
+                }
+                configContext.SaveChanges();
+
+                if (!identityContext.Users.Any())
+                {
+                    foreach (var item in Config.Users.Get())
+                    {
+                        identityContext.Users.Add(item);
+                    }
+                }
+
+                if (!identityContext.Roles.Any())
+                {
+                    foreach (var item in Config.Roles.Get())
+                    {
+                        identityContext.Roles.Add(item);
+                    }
+                }
+                identityContext.SaveChanges();
             }
         }
 

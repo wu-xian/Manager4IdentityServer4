@@ -127,5 +127,10 @@ namespace IdentityServer4_Manager.Services
             var usr = await _userManager.FindByIdAsync(userId);
             return await _userManager.AddClaimAsync(usr, new System.Security.Claims.Claim(claimType, claimValue));
         }
+
+        public async Task<Model.IdentityUser> GetUserByName(string userName)
+        {
+            return await _userManager.FindByNameAsync(userName);
+        }
     }
 }

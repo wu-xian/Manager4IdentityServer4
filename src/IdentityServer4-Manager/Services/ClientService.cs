@@ -72,9 +72,9 @@ namespace IdentityServer4_Manager.Services
             return dbResult;
         }
 
-        public async Task<List<ClientScope>> GetScopes(int id)
-        {
-            _idb.
-        }
+        //public async Task<List<ClientScope>> GetScopes(int id)
+        //{
+        //    _idb.
+        //}
     }
 }

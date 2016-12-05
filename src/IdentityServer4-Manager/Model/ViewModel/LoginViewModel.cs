@@ -1,20 +1,20 @@
-﻿using System;
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+
+
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Model.ViewModel
+namespace IdentityServer4.Quickstart.UI.Models
 {
-    public class LoginViewModel
+    public class LoginViewModel : LoginInputModel
     {
-        [MaxLength(10)]
-        [Required]
-        public string UserName { set; get; }
-        [MaxLength(20)]
-        [Required]
-        public string Password { set; get; }
+        public bool EnableLocalLogin { get; set; }
+        public IEnumerable<ExternalProvider> ExternalProviders { get; set; }
+    }
 
-        public bool RememberMe { set; get; }
+    public class ExternalProvider
+    {
+        public string DisplayName { get; set; }
+        public string AuthenticationScheme { get; set; }
     }
 }

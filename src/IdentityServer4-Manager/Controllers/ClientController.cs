@@ -32,7 +32,7 @@ namespace IdentityServer4_Manager.Controllers
 
         public async Task<IActionResult> GetScopes(int id)
         {
-
+            return null;
         }
 
         public async Task<IActionResult> Get(int id)
@@ -49,7 +49,7 @@ namespace IdentityServer4_Manager.Controllers
 
         public async Task<IActionResult> RemoveClient(int id)
         {
-           await  _clientService.RemoveClient(id);
+            await _clientService.RemoveClient(id);
             return Content("asd");
         }
     }
