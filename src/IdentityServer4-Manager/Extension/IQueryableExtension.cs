@@ -21,8 +21,8 @@ namespace IdentityServer4_Manager.Extension
                 {
                     result =
                      source
-                    .OrderBy(orderbyStr)
                     .Where(whereLambda)
+                    .OrderBy(orderbyStr)
                     .Skip(pageIndex)
                     .Take(pageSize)
                     ;

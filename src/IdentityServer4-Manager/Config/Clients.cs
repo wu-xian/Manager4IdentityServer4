@@ -14,7 +14,13 @@ namespace IdentityServer4_Manager.Config
                 new Client() {
                    ClientName="Mvc-Client",
                    ClientId=Guid.NewGuid().ToString(),
-                   ClientUri="http://localhost:9091"
+                   ClientUri="http://localhost:9091",
+                   AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
+                   RequireClientSecret=false,
+                   AllowedScopes= {
+                        "MVC.ADMIN",
+                        "MVC.USER"
+                    }
                 }
             };
         }

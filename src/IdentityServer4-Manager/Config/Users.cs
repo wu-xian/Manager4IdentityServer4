@@ -11,15 +11,23 @@ namespace IdentityServer4_Manager.Config
     {
         public static List<Model.IdentityUser> Get()
         {
-            var idUser = new Model.IdentityUser()
+            var idUser1 = new Model.IdentityUser()
             {
                 UserName = "wuxian",
                 Email = "wu-xian.cool@qq.com"
             };
-            idUser.PasswordHash = new PasswordHasher<Model.IdentityUser>().HashPassword(idUser, "wuxian");
+            idUser1.PasswordHash = new PasswordHasher<Model.IdentityUser>().HashPassword(idUser1, "wuxian");
+
+            var IdUsr2 = new Model.IdentityUser()
+            {
+                UserName = "admin"
+                ,
+            };
+            new PasswordHasher<Model.IdentityUser>().HashPassword(IdUsr2, "helloworld");
             return new List<Model.IdentityUser>()
             {
-                idUser
+                idUser1,
+                IdUsr2
             };
         }
     }

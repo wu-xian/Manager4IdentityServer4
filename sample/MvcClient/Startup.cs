@@ -53,9 +53,9 @@ namespace MvcClient
             app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions()
             {
                 Authority = "http://localhost:9090",
-                AllowedScopes = { "mvc-cient" },
+                AllowedScopes = { "MVC.ADMIN" },
                 RequireHttpsMetadata = false,
-                ApiName = "mvc-client"
+                ApiName = "MVC.ADMIN"
             });
 
             app.UseMvc(routes =>
