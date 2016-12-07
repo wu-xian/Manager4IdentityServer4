@@ -62,7 +62,7 @@ namespace IdentityServer4_Manager
 
             //Add IdentityServer services
             AddIdentityServer(services);
-            
+
             services.AddMvc();
         }
 
@@ -109,7 +109,7 @@ namespace IdentityServer4_Manager
         private void AddServices(IServiceCollection services)
         {
             services.AddScoped<UserService>();
-            services.AddScoped<UserLoginService>(); 
+            services.AddScoped<UserLoginService>();
             services.AddScoped<ClientService>();
         }
 
@@ -145,6 +145,14 @@ namespace IdentityServer4_Manager
                     foreach (var item in Config.ApiResources.Get())
                     {
                         configContext.ApiResources.Add(item.ToEntity());
+                    }
+                }
+
+                if (!configContext.IdentityResources.Any())
+                {
+                    foreach (var item in Config.IdentityResource.Get())
+                    {
+                        configContext.IdentityResources.Add(item.ToEntity());
                     }
                 }
 

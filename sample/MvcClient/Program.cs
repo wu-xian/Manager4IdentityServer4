@@ -16,6 +16,7 @@ namespace MvcClient
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                .UseUrls("http://localhost:9091")
                 .Build();
 
             host.Run();

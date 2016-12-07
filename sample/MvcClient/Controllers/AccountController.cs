@@ -15,11 +15,11 @@ namespace MvcClient.Controllers
 
         }
 
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Login(string userName, string password, string clientId)
         {
-            var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
-            TokenClient client = new TokenClient(disco.TokenEndpoint, "client", "secret".Sha256());
-            var response = await client.RequestResourceOwnerPasswordAsync("alice", "alice", "api1");
+            var disco = await DiscoveryClient.GetAsync("http://localhost:9090");
+            TokenClient client = new TokenClient(disco.TokenEndpoint, clientId);
+            var response = await client.RequestResourceOwnerPasswordAsync(userName, password, "MVC.ADMIN");
             return Json(response.Json);
         }
     }

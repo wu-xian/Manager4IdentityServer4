@@ -1,0 +1,27 @@
+﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace IdentityServer4_Manager.Config
+{
+    public class IdentityResource
+    {
+        public static List<IdentityServer4.Models.IdentityResource> Get()
+        {
+            return new List<IdentityServer4.Models.IdentityResource>() {
+                new IdentityServer4.Models.IdentityResource() {
+                    Name="MVC.ADMIN",
+                    Enabled=true,
+                    DisplayName="MVC.ADMIN"
+                },
+                new IdentityServer4.Models.IdentityResource() {
+                    Name="MVC.USER",
+                    Enabled=true,
+                    DisplayName="MVC.USER"
+                }
+            };
+        }
+    }
+}
