@@ -30,8 +30,8 @@ namespace MvcClient
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication();
-            services.AddIdentityServer();
+            //services.AddAuthentication();
+            //services.AddIdentityServer();
             // Add framework services.
             services.AddMvc();
         }
@@ -59,23 +59,27 @@ namespace MvcClient
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
-                AuthenticationScheme = "Cookies",
+                AuthenticationScheme = "cookie",
                 AutomaticAuthenticate = true
             });
 
             app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions()
             {
                 Authority = "http://localhost:9090",
-                AuthenticationScheme = "oidc",
+                //AuthenticationScheme = "oidc",
 
                 ClientId = "mvc-client-one",
                 SaveTokens = true,
-                SignInScheme = "Cookies",
+                SignInScheme = "cookie",
 
                 //CallbackPath = "/home/index",
                 RequireHttpsMetadata = false,
 
-                Scope = { "openid", "profile", "MVC.ADMIN" },
+                Scope = {
+                        "MVC.ADMIN",
+                        "MVC.USER",
+                        IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServer4.IdentityServerConstants.StandardScopes.Profile},
 
                 TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                 {

@@ -14,7 +14,7 @@ namespace IdentityServer4_Manager.Config
                 new Client() {
                    ClientName="MVC",
                    ClientId="mvc-client-one",
-                   ClientUri="http://localhost:9091",
+                   //ClientUri="http://localhost:9091",
                    AllowedScopes= {
                         "MVC.ADMIN",
                         "MVC.USER",
@@ -22,9 +22,9 @@ namespace IdentityServer4_Manager.Config
                         IdentityServer4.IdentityServerConstants.StandardScopes.Profile
                     },
                    AllowedGrantTypes= GrantTypes.Implicit,
-                   RequireClientSecret=false,
-                   RedirectUris= { "http://localhost:9091/home/index#wuxian"},
-                   LogoutUri=  "http://localhost:9091/account/logout"
+                   //RequireClientSecret=false,
+                   RedirectUris= { "http://localhost:9091/signin-oidc"},
+                   LogoutUri=  "http://localhost:9091"
                 }
             };
         }
