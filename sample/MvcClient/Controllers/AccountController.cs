@@ -15,7 +15,7 @@ namespace MvcClient.Controllers
 
         }
 
-        public async Task<IActionResult> Login(string clientId, string userName, string password)
+        public async Task<IActionResult> Login(string userName, string password, string clientId)
         {
             var disco = await DiscoveryClient.GetAsync("http://localhost:9090");
             TokenClient client = new TokenClient(disco.TokenEndpoint, clientId);

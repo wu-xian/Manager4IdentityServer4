@@ -97,7 +97,7 @@ namespace IdentityServer4_Manager.Controllers
                         return Redirect(model.ReturnUrl);
                     }
 
-                    return Redirect("~/");
+                    return Redirect("/home/index");
                 }
 
                 ModelState.AddModelError("", "Invalid username or password.");

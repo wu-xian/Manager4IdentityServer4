@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,17 +12,17 @@ namespace IdentityServer4_Manager.Config
         {
             return new List<IdentityServer4.Models.IdentityResource>() {
                 new IdentityServer4.Models.IdentityResource() {
-                    DisplayName="MVC.ADMIN",
                     Name="MVC.ADMIN",
-                    ShowInDiscoveryDocument=true,
-                    Enabled=true
+                    Enabled=true,
+                    DisplayName="MVC.ADMIN"
                 },
                 new IdentityServer4.Models.IdentityResource() {
-                    DisplayName="MVC.USER",
                     Name="MVC.USER",
-                    ShowInDiscoveryDocument=true,
-                    Enabled=true
-                }
+                    Enabled=true,
+                    DisplayName="MVC.USER"
+                },
+                new IdentityServer4.Models.IdentityResources.OpenId(),
+                new IdentityServer4.Models.IdentityResources.Profile()
             };
         }
     }

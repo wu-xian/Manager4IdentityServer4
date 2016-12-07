@@ -12,15 +12,19 @@ namespace IdentityServer4_Manager.Config
         {
             return new List<Client>() {
                 new Client() {
-                   ClientName="Mvc-Client",
-                   ClientId=Guid.NewGuid().ToString(),
-                   ClientUri="http://localhost:9091",
-                   AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
-                   RequireClientSecret=false,
+                   ClientName="MVC",
+                   ClientId="mvc-client-one",
+                   //ClientUri="http://localhost:9091",
                    AllowedScopes= {
                         "MVC.ADMIN",
-                        "MVC.USER"
-                    }
+                        "MVC.USER",
+                        IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServer4.IdentityServerConstants.StandardScopes.Profile
+                    },
+                   AllowedGrantTypes= GrantTypes.Implicit,
+                   //RequireClientSecret=false,
+                   RedirectUris= { "http://localhost:9091/signin-oidc"},
+                   LogoutUri=  "http://localhost:9091"
                 }
             };
         }

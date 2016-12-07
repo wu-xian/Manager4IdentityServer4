@@ -17,17 +17,16 @@ namespace IdentityServer4_Manager.Config
                 Email = "wu-xian.cool@qq.com"
             };
             idUser1.PasswordHash = new PasswordHasher<Model.IdentityUser>().HashPassword(idUser1, "wuxian");
-
-            var IdUsr2 = new Model.IdentityUser()
+            var idUser2 = new Model.IdentityUser()
             {
-                UserName = "admin"
-                ,
+                UserName = "admin",
+                Email = "admin.cool@qq.com"
             };
-            new PasswordHasher<Model.IdentityUser>().HashPassword(IdUsr2, "helloworld");
+            idUser2.PasswordHash = new PasswordHasher<Model.IdentityUser>().HashPassword(idUser2, "admin");
             return new List<Model.IdentityUser>()
             {
                 idUser1,
-                IdUsr2
+                idUser2
             };
         }
     }
