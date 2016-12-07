@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using IdentityServer4.Models;
+using System.IdentityModel.Tokens.Jwt;
+using IdentityModel;
 
 namespace MvcClient
 {
@@ -28,6 +30,8 @@ namespace MvcClient
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication();
+            services.AddIdentityServer();
             // Add framework services.
             services.AddMvc();
         }
@@ -38,24 +42,46 @@ namespace MvcClient
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            //if (env.IsDevelopment())
+            //{
+            app.UseDeveloperExceptionPage();
+            app.UseBrowserLink();
+            //}
+            //else
+            //{
+            //app.UseExceptionHandler("/Home/Error");
+            //}
 
             app.UseStaticFiles();
 
-            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions()
+            //change claim type map to jwt claims type
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                AuthenticationScheme = "Cookies",
+                AutomaticAuthenticate = true
+            });
+
+            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions()
             {
                 Authority = "http://localhost:9090",
-                AllowedScopes = { "mvc-cient" },
+                AuthenticationScheme = "oidc",
+
+                ClientId = "mvc-client-one",
+                SaveTokens = true,
+                SignInScheme = "Cookies",
+
+                //CallbackPath = "/home/index",
                 RequireHttpsMetadata = false,
-                ApiName = "mvc-client"
+
+                Scope = { "openid", "profile", "MVC.ADMIN" },
+
+                TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    NameClaimType = JwtClaimTypes.Name,
+                    RoleClaimType = JwtClaimTypes.Role
+                }
             });
 
             app.UseMvc(routes =>

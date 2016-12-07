@@ -13,7 +13,7 @@ namespace IdentityServer4_Manager.Config
             return new List<Client>() {
                 new Client() {
                    ClientName="MVC",
-                   ClientId=Guid.NewGuid().ToString(),
+                   ClientId="mvc-client-one",
                    ClientUri="http://localhost:9091",
                    AllowedScopes= {
                         "MVC.ADMIN",
@@ -21,6 +21,8 @@ namespace IdentityServer4_Manager.Config
                         IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServer4.IdentityServerConstants.StandardScopes.Profile
                     },
+                   AllowedGrantTypes= GrantTypes.Implicit,
+                   RequireClientSecret=false,
                    RedirectUris= { "http://localhost:9091/home/index#wuxian"},
                    LogoutUri=  "http://localhost:9091/account/logout"
                 }

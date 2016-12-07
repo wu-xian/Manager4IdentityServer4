@@ -92,6 +92,12 @@ namespace IdentityServer4_Manager
 
             app.UseApplicationInsightsExceptionTelemetry();
 
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                AuthenticationScheme = "Cookies",
+                LoginPath = "/account/login"
+            });
+
             app.UseStaticFiles();
 
             app.UseIdentity();

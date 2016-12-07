@@ -20,7 +20,9 @@ namespace IdentityServer4_Manager.Config
                     Name="MVC.USER",
                     Enabled=true,
                     DisplayName="MVC.USER"
-                }
+                },
+                new IdentityServer4.Models.IdentityResources.OpenId(),
+                new IdentityServer4.Models.IdentityResources.Profile()
             };
         }
     }
