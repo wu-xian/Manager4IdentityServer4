@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using IdentityServer4.Models;
 using System.IdentityModel.Tokens.Jwt;
-using IdentityModel;
 
 namespace MvcClient
 {
@@ -66,26 +64,27 @@ namespace MvcClient
             app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions()
             {
                 Authority = "http://localhost:9090",
-                //AuthenticationScheme = "oidc",
+                AuthenticationScheme = "oidc",
 
                 ClientId = "mvc-client-one",
                 SaveTokens = true,
                 SignInScheme = "cookie",
 
                 //CallbackPath = "/home/index",
-                RequireHttpsMetadata = false,
+                RequireHttpsMetadata = false
+                ,
 
-                Scope = {
-                        "MVC.ADMIN",
-                        "MVC.USER",
-                        IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServer4.IdentityServerConstants.StandardScopes.Profile},
+                //Scope = {
+                //        "MVC.ADMIN",
+                //        "MVC.USER",
+                //        IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
+                //        IdentityServer4.IdentityServerConstants.StandardScopes.Profile},
 
-                TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-                {
-                    NameClaimType = JwtClaimTypes.Name,
-                    RoleClaimType = JwtClaimTypes.Role
-                }
+                //TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                //{
+                //    NameClaimType = JwtClaimTypes.Name,
+                //    RoleClaimType = JwtClaimTypes.Role
+                //}
             });
 
             app.UseMvc(routes =>
