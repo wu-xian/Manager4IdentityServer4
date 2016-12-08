@@ -23,8 +23,8 @@ namespace IdentityServer4_Manager.Config
                     },
                    AllowedGrantTypes= GrantTypes.Implicit,
                    //RequireClientSecret=false,
-                   RedirectUris= { "http://localhost:9091/signin-oidc"},
-                   LogoutUri=  "http://localhost:9091"
+                   RedirectUris= { "https://localhost:9091/signin-oidc"},
+                   PostLogoutRedirectUris= {"https://localhost:9091" }
                 }
             };
         }

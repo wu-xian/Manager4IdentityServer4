@@ -1,6 +1,4 @@
-﻿using IdentityModel.Client;
-using IdentityServer4.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +12,6 @@ namespace MvcClient.Controllers
         {
 
         }
-
-        public async Task<IActionResult> Login(string userName, string password, string clientId)
-        {
-            var disco = await DiscoveryClient.GetAsync("http://localhost:9090");
-            TokenClient client = new TokenClient(disco.TokenEndpoint, clientId);
-            var response = await client.RequestResourceOwnerPasswordAsync(userName, password, "MVC.ADMIN");
-            return Json(response.Json);
-        }
+        
     }
 }

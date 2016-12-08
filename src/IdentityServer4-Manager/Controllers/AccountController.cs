@@ -1,5 +1,4 @@
 ﻿using IdentityModel;
-using IdentityServer4.Quickstart.UI.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Services.InMemory;
 using Microsoft.AspNetCore.Http.Authentication;
@@ -14,6 +13,7 @@ using IdentityServer4.Models;
 using IdentityServer4.Stores;
 using IdentityServer4;
 using IdentityServer4_Manager.Services;
+using IdentityServer4_Manager.Model.ViewModel;
 
 namespace IdentityServer4_Manager.Controllers
 {
