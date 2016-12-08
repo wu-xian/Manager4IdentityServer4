@@ -12,9 +12,11 @@ namespace IdentityServer4_Manager.Config
         {
             return new List<IdentityRole>() {
                 new IdentityRole() {
+                    Id="MVC.ADMIN",
                    Name="MVC.ADMIN"
                 },
                 new IdentityRole() {
+                    Id="MVC.USER",
                     Name="MVC.USER"
                 }
             };

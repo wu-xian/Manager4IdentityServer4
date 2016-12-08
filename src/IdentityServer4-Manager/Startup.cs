@@ -92,15 +92,13 @@ namespace IdentityServer4_Manager
 
             app.UseApplicationInsightsExceptionTelemetry();
 
+            app.UseStaticFiles();
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
                 AuthenticationScheme = "Cookies",
                 LoginPath = "/account/login"
             });
-
-            app.UseStaticFiles();
-
-            app.UseCookieAuthentication();
 
             app.UseIdentity();
 
@@ -124,7 +122,10 @@ namespace IdentityServer4_Manager
         private void AddIdentityServer(IServiceCollection services)
         {
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-            services.AddIdentityServer()
+            services.AddIdentityServer(config =>
+            {
+
+            })
                 .AddTemporarySigningCredential()
                 .AddConfigurationStore(builder =>
                 builder.UseMySql(Configuration.GetConnectionString("DefaultConnection"), options =>

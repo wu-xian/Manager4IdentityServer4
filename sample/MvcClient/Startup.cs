@@ -57,7 +57,7 @@ namespace MvcClient
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
-                AuthenticationScheme = "cookie",
+                AuthenticationScheme = "Cookies",
                 AutomaticAuthenticate = true
             });
 
@@ -68,7 +68,7 @@ namespace MvcClient
 
                 ClientId = "mvc-client-one",
                 SaveTokens = true,
-                SignInScheme = "cookie",
+                SignInScheme = "Cookies",
 
                 //CallbackPath = "/home/index",
                 RequireHttpsMetadata = false

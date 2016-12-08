@@ -14,7 +14,10 @@ namespace IdentityServer4_Manager.Config
             var idUser1 = new Model.IdentityUser()
             {
                 UserName = "wuxian",
-                Email = "wu-xian.cool@qq.com"
+                Email = "wu-xian.cool@qq.com",
+                Roles = { new IdentityUserRole<string>() {
+                    RoleId="MVC.ADMIN"
+                } }
             };
             idUser1.PasswordHash = new PasswordHasher<Model.IdentityUser>().HashPassword(idUser1, "wuxian");
             var idUser2 = new Model.IdentityUser()

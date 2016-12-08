@@ -1,8 +1,8 @@
-﻿using IdentityServer4.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.Models;
 
 namespace IdentityServer4_Manager.Config
 {
@@ -21,10 +21,17 @@ namespace IdentityServer4_Manager.Config
                         IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServer4.IdentityServerConstants.StandardScopes.Profile
                     },
+                   Claims= new List<System.Security.Claims.Claim>() {
+                       new System.Security.Claims.Claim("client.role","clientROLE"),
+                       new System.Security.Claims.Claim("client.name","clientNAME")
+                   },
+                   AllowAccessTokensViaBrowser=true,
+                   PrefixClientClaims=true,
+                   AlwaysSendClientClaims=true,
                    AllowedGrantTypes= GrantTypes.Implicit,
                    //RequireClientSecret=false,
-                   RedirectUris= { "https://localhost:9091/signin-oidc"},
-                   PostLogoutRedirectUris= {"https://localhost:9091" }
+                   RedirectUris= { "http://localhost:9091/signin-oidc"},
+                   PostLogoutRedirectUris= {"http://localhost:9091" }
                 }
             };
         }

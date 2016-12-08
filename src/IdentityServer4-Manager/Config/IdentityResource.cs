@@ -14,7 +14,9 @@ namespace IdentityServer4_Manager.Config
                 new IdentityServer4.Models.IdentityResource() {
                     Name="MVC.ADMIN",
                     Enabled=true,
-                    DisplayName="MVC.ADMIN"
+                    DisplayName="MVC.ADMIN",
+                    UserClaims= { "role","name" },
+                    Emphasize=true
                 },
                 new IdentityServer4.Models.IdentityResource() {
                     Name="MVC.USER",
