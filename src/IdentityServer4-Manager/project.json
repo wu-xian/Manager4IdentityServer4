@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "Microsoft.NETCore.App": {
-      "version": "1.0.1",
+      "version": "1.1.0",
       "type": "platform"
     },
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
@@ -22,13 +22,13 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
-    "IdentityServer4": "1.0.0-rc4-update1",
+    "IdentityServer4": "1.0.0-rc5",
+    "IdentityServer4.EntityFramework": "1.0.0-rc5",
+    "IdentityServer4.AspNetIdentity": "1.0.0-rc5",
     "IdentityServer4.AccessTokenValidation": "1.0.1-rc3",
     "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
-    "IdentityServer4.EntityFramework": "1.0.0-rc4-update1",
-    "IdentityServer4.AspNetIdentity": "1.0.0-rc4-update1",
     "Pomelo.EntityFrameworkCore.MySql": "1.0.1",
     "Microsoft.AspNetCore.Identity": "1.1.0",
     "AutoMapper": "5.2.0",
