@@ -25,6 +25,7 @@ namespace IdentityServer4_Manager.Config
                        new System.Security.Claims.Claim("client.role","clientROLE"),
                        new System.Security.Claims.Claim("client.name","clientNAME")
                    },
+                   ClientSecrets=new List<Secret>() { new Secret("mvc".Sha256()) },
                    AllowAccessTokensViaBrowser=true,
                    PrefixClientClaims=true,
                    AlwaysSendClientClaims=true,

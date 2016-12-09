@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IdentityModel.Tokens.Jwt;
+using IdentityServer4.Models;
 
 namespace MvcClient
 {
@@ -69,7 +70,7 @@ namespace MvcClient
                 ClientId = "mvc-client-one",
                 SaveTokens = true,
                 SignInScheme = "Cookies",
-
+                ClientSecret = "mvc".Sha256(),
                 //CallbackPath = "/home/index",
                 RequireHttpsMetadata = false
                 ,
