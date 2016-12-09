@@ -113,10 +113,10 @@ namespace IdentityServer4_Manager.Controllers
                 var client = await _clientStore.FindEnabledClientByIdAsync(request.ClientId);
                 if (client != null)
                 {
-                    var resources = await _resourceStore.FindEnabledIdentityResourcesByScopeAsync(request.ScopesRequested);
-                    if (resources != null && (resources.Any() || resources.Any()))
+                    var resources = await _resourceStore.FindEnabledResourcesAsync(request.ScopesRequested);
+                    if (resources != null && (resources.IdentityResources.Any() || resources.ApiResources.Any()))
                     {
-                        return new ConsentViewModel(model, returnUrl, request, client, null);
+                        return new ConsentViewModel(model, returnUrl, request, client, resources);
                     }
                     else
                     {
