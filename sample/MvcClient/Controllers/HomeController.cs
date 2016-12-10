@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace MvcClient.Controllers
 {
@@ -10,7 +11,8 @@ namespace MvcClient.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var usr = HttpContext.User;
+            return View(usr.Claims.ToList());
         }
 
         public IActionResult About()

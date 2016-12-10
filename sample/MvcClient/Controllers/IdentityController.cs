@@ -7,12 +7,36 @@ using System.Threading.Tasks;
 
 namespace MvcClient.Controllers
 {
-    [Authorize]
     public class IdentityController : Controller
     {
-        public IActionResult Get()
+        [Authorize(Roles = "admin")]
+        public IActionResult Admin()
         {
-            return Content("access");
+            return Content("im admin");
+        }
+
+        [Authorize(Roles = "user")]
+        public IActionResult User1()
+        {
+            return Content("im user");
+
+        }
+
+        [Authorize(Roles = "admin,user")]
+        public IActionResult Index()
+        {
+            return Content("im admin and user");
+        }
+
+        [Authorize(Roles = "saler")]
+        public IActionResult Saler()
+        {
+            return Content("saler");
+        }
+
+        public IActionResult Ping()
+        {
+            return Content("pong");
         }
     }
 }

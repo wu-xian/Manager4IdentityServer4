@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IdentityModel.Tokens.Jwt;
 using IdentityServer4.Models;
+using IdentityModel;
 
 namespace MvcClient
 {
@@ -61,7 +62,7 @@ namespace MvcClient
                 AuthenticationScheme = "Cookies",
                 AutomaticAuthenticate = true
             });
-
+            JwtSecurityTokenHandler a = new JwtSecurityTokenHandler();
             app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions()
             {
                 Authority = "http://localhost:9090",
@@ -71,6 +72,13 @@ namespace MvcClient
                 SaveTokens = true,
                 SignInScheme = "Cookies",
                 ClientSecret = "mvc".Sha256(),
+
+                TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    RoleClaimType = JwtClaimTypes.Role,
+                    NameClaimType = JwtClaimTypes.Name
+
+                },
                 //CallbackPath = "/home/index",
                 RequireHttpsMetadata = false
                 ,
