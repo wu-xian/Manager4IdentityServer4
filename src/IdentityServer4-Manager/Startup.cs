@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using IdentityServer4_Manager.Model;
 using AutoMapper;
 using IdentityServer4_Manager.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -174,11 +172,21 @@ namespace IdentityServer4_Manager
                 }
                 configContext.SaveChanges();
 
+                ///var userManager = builder.ApplicationServices.GetService<Microsoft.AspNetCore.Identity.UserManager<string>>();
                 if (!identityContext.Users.Any())
                 {
                     foreach (var item in Config.Users.Get())
                     {
                         identityContext.Users.Add(item);
+                        foreach (var item2 in Config.Users.GetClaims())
+                        {
+                            identityContext.UserClaims.Add(new IdentityUserClaim<string>()
+                            {
+                                UserId = item.Id,
+                                ClaimValue = item2.Value,
+                                ClaimType = item2.Type
+                            });
+                        }
                     }
                 }
 

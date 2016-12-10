@@ -13,6 +13,7 @@ namespace IdentityServer4_Manager.Config
         {
             var idUser1 = new Model.IdentityUser()
             {
+                Id = "wuxian",
                 UserName = "wuxian",
                 Email = "wu-xian.cool@qq.com",
                 Roles = { new IdentityUserRole<string>() {
@@ -23,6 +24,7 @@ namespace IdentityServer4_Manager.Config
             idUser1.PasswordHash = new PasswordHasher<Model.IdentityUser>().HashPassword(idUser1, "wuxian");
             var idUser2 = new Model.IdentityUser()
             {
+                Id = "admin",
                 UserName = "admin",
                 Email = "admin.cool@qq.com"
             };
@@ -31,6 +33,14 @@ namespace IdentityServer4_Manager.Config
             {
                 idUser1,
                 idUser2
+            };
+        }
+
+        public static List<System.Security.Claims.Claim> GetClaims()
+        {
+            return new List<System.Security.Claims.Claim>() {
+                new System.Security.Claims.Claim("role","user"),
+                new System.Security.Claims.Claim("name","default"+Guid.NewGuid().ToString())
             };
         }
     }

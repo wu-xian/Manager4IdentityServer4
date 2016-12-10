@@ -82,18 +82,12 @@ namespace MvcClient
                 //CallbackPath = "/home/index",
                 RequireHttpsMetadata = false
                 ,
-
-                //Scope = {
-                //        "MVC.ADMIN",
-                //        "MVC.USER",
-                //        IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
-                //        IdentityServer4.IdentityServerConstants.StandardScopes.Profile},
-
-                //TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-                //{
-                //    NameClaimType = JwtClaimTypes.Name,
-                //    RoleClaimType = JwtClaimTypes.Role
-                //}
+                Scope = {
+                        "MVC.ADMIN",
+                        "MVC.USER",
+                        IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServer4.IdentityServerConstants.StandardScopes.Profile
+                }
             });
 
             app.UseMvc(routes =>
