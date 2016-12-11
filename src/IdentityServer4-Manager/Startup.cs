@@ -167,6 +167,7 @@ namespace IdentityServer4_Manager
                 {
                     foreach (var item in Config.Clients.Get())
                     {
+                        item.AllowedScopes.Add("wulala");
                         configContext.Clients.Add(item.ToEntity());
                     }
                 }
