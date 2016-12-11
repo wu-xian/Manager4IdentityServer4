@@ -1,19 +1,46 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.EntityFramework.Entities;
+using IdentityServer4.EntityFramework.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace IdentityServer4_Manager.Model
+namespace IdentityServer4_Manager.Data.DbContexts
 {
-    public class IdentityDbContext
-        : IdentityDbContext<
-            Model.IdentityUser>
+    public class IdentityServerDbContext : IdentityDbContext<Model.IdentityUser>,
+        IConfigurationDbContext,
+        IPersistedGrantDbContext
     {
-
-        public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
+        public IdentityServerDbContext(DbContextOptions<IdentityServerDbContext> options) : base(options)
         { }
+
+        public DbSet<ApiResource> ApiResources { set; get; }
+        public DbSet<ApiResourceClaim> ApiResourceClaims { set; get; }
+        public DbSet<ApiScope> ApiScopes { set; get; }
+        public DbSet<ApiScopeClaim> ApiScopeClaims { set; get; }
+        public DbSet<ApiSecret> ApiSecrets { set; get; }
+        public DbSet<Client> Clients { set; get; }
+        public DbSet<ClientClaim> ClientClaims { set; get; }
+        public DbSet<ClientCorsOrigin> ClientCorsOrigins { set; get; }
+        public DbSet<ClientGrantType> ClientGrantTypes { set; get; }
+        public DbSet<ClientIdPRestriction> ClientIdPRestrictions { set; get; }
+        public DbSet<ClientPostLogoutRedirectUri> ClientPostLogoutRedirectUris { set; get; }
+        public DbSet<ClientRedirectUri> ClientRedirectUris { set; get; }
+        public DbSet<ClientScope> ClientScopes { set; get; }
+        public DbSet<ClientSecret> ClientSecrets { set; get; }
+        public DbSet<IdentityClaim> IdentityClaims { set; get; }
+        public DbSet<IdentityResource> IdentityResources { set; get; }
+        public DbSet<PersistedGrant> PersistedGrants { set; get; }
+        public DbSet<Secret> Secrets { set; get; }
+
+        //public DbSet<UserClaim> UserClaims { set; get; }
+
+        public Task<int> SaveChangesAsync()
+        {
+            return base.SaveChangesAsync();
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
