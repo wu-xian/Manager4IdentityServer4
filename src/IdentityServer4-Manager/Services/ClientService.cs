@@ -19,7 +19,7 @@ namespace IdentityServer4_Manager.Services
             _idb = idb;
         }
 
-        public PagingResponse GetPaged(PagingRequest request, string clientId, string clientName)
+        public async Task<PagingResponse> GetPaged(PagingRequest request, string clientId, string clientName)
         {
             int totalCount = 0;
             var dbResult = _idb.Clients
@@ -36,14 +36,14 @@ namespace IdentityServer4_Manager.Services
                     )
                 .Select(d => Mapper.Map<Model.ViewModel.ClientDisplay>(d))
                 ;
-            return new PagingResponse()
+            return await Task.FromResult<PagingResponse>(new PagingResponse()
             {
                 Total = totalCount,
                 Rows = dbResult
-            };
+            });
         }
 
-        public void AddClient(string clientName, string clientUri)
+        public async Task<int> Create(string clientName, string clientUri)
         {
             var clien = new Client()
             {
@@ -54,10 +54,10 @@ namespace IdentityServer4_Manager.Services
 
             };
             _idb.Clients.Add(clien);
-            _idb.SaveChanges();
+            return await _idb.SaveChangesAsync();
         }
 
-        public async Task RemoveClient(int id)
+        public async Task Delete(int id)
         {
             _idb.Clients.Remove(new Client()
             {
@@ -66,15 +66,47 @@ namespace IdentityServer4_Manager.Services
             await _idb.SaveChangesAsync();
         }
 
-        public Client Get(int id)
+        public async Task<int> Update(Client client)
         {
-            var dbResult = _idb.Clients.Where(d => d.Id == id).AsNoTracking().FirstOrDefault();
-            return dbResult;
+            _idb.Clients.Update(client);
+            return await _idb.SaveChangesAsync();
         }
 
-        //public async Task<List<ClientScope>> GetScopes(int id)
-        //{
-        //    _idb.
-        //}
+        public async Task<Client> GetById(int id)
+        {
+            return await _idb.Clients.Where(d => d.Id == id).AsNoTracking().FirstOrDefaultAsync();
+        }
+
+        public async Task<List<ClientScope>> GetScopesByClientId(int id)
+        {
+            var client = await _idb.Clients.FirstOrDefaultAsync(d => d.Id == id);
+            if (client == null)
+            {
+                return await Task.FromResult<List<ClientScope>>(null);
+            }
+            return await Task.FromResult<List<ClientScope>>(client.AllowedScopes);
+        }
+
+        public async Task<int> UpdateScope(int id, List<string> scope)
+        {
+            var client = await _idb.Clients.FirstOrDefaultAsync(d => d.Id == id);
+            if (client == null || scope == null)
+            {
+                return await Task.FromResult<int>(0);
+            }
+            var clientScopes = new List<ClientScope>();
+            foreach (var item in scope)
+            {
+                clientScopes.Add(new ClientScope()
+                {
+                    Client = client,
+                    Scope = item
+                });
+            }
+            client.AllowedScopes = clientScopes;
+            _idb.Clients.Update(client);
+            return await _idb.SaveChangesAsync();
+        }
+
     }
 }

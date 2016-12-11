@@ -27,7 +27,7 @@ namespace IdentityServer4_Manager.Controllers
 
         public async Task<IActionResult> GetClients(PagingRequest request, string clientId, string clientName)
         {
-            return Json(_clientService.GetPaged(request, clientId, clientName));
+            return Json(await _clientService.GetPaged(request, clientId, clientName));
         }
 
         public async Task<IActionResult> GetScopes(int id)
@@ -37,19 +37,19 @@ namespace IdentityServer4_Manager.Controllers
 
         public async Task<IActionResult> Get(int id)
         {
-            var client = _clientService.Get(id);
+            var client = _clientService.GetById(id);
             return PartialView("Get", client);
         }
 
         public async Task<IActionResult> Create(string clientName, string clientUri)
         {
-            _clientService.AddClient(clientName, clientUri);
+            _clientService.Create(clientName, clientUri);
             return Content("123");
         }
 
         public async Task<IActionResult> RemoveClient(int id)
         {
-            await _clientService.RemoveClient(id);
+            await _clientService.Delete(id);
             return Content("asd");
         }
     }
