@@ -119,7 +119,7 @@ function tableInit() {
            title: 'Operation',
            align: 'center',
            valign: 'middle',
-           width: 150,
+           width: 100,
            formatter: operationFormatter
        },
         {
