@@ -120,10 +120,7 @@ namespace IdentityServer4_Manager
         private void AddIdentityServer(IServiceCollection services)
         {
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-            services.AddIdentityServer(config =>
-            {
-
-            })
+            services.AddIdentityServer()
                 .AddTemporarySigningCredential()
                 .AddConfigurationStore(builder =>
                 builder.UseMySql(Configuration.GetConnectionString("DefaultConnection"), options =>
@@ -268,6 +265,14 @@ namespace IdentityServer4_Manager
 
                 #region IdentityResource => IdentityResourceDisplay
                 cfg.CreateMap<IdentityResource, Model.ViewModel.IdentityResourceDisplay>()
+                    .ForMember(d => d.ClaimCount, u => u.MapFrom(item => item.UserClaims.Count()))
+                ;
+                #endregion
+
+                #region ApiResource => ApiResourceDisplay
+                cfg.CreateMap<ApiResource, Model.ViewModel.ApiResourceDisplay>()
+                    .ForMember(d => d.ScopeCount, u => u.MapFrom(item => item.Scopes.Count()))
+                    .ForMember(d => d.SecretCount, u => u.MapFrom(item => item.Secrets.Count()))
                     .ForMember(d => d.ClaimCount, u => u.MapFrom(item => item.UserClaims.Count()))
                 ;
                 #endregion

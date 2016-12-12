@@ -25,14 +25,19 @@ namespace IdentityServer4_Manager.Controllers
             return PartialView("AddClient");
         }
 
-        public async Task<IActionResult> GetClients(PagingRequest request, string clientId, string clientName)
+        public async Task<IActionResult> GetPaged(PagingRequest request, string clientId, string clientName)
         {
             return Json(await _clientService.GetPaged(request, clientId, clientName));
         }
 
         public async Task<IActionResult> GetScopes(int id)
         {
-            return null;
+            return Json(await _clientService.GetScopesByClientId(id));
+        }
+
+        public async Task<IActionResult> UpdateScopes(int id, List<string> scopes)
+        {
+            return Json(await _clientService.UpdateScope(id, scopes));
         }
 
         public async Task<IActionResult> Get(int id)
