@@ -79,10 +79,10 @@ namespace IdentityServer4_Manager.Services
 
         public async Task<List<ClientScope>> GetScopesByClientId(int id)
         {
-            var client = await _idb.Clients.FirstOrDefaultAsync(d => d.Id == id);
+            var client = await _idb.Clients.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
             if (client == null)
             {
-                return await Task.FromResult<List<ClientScope>>(null);
+                return null;
             }
             return await Task.FromResult<List<ClientScope>>(client.AllowedScopes);
         }
@@ -92,7 +92,7 @@ namespace IdentityServer4_Manager.Services
             var client = await _idb.Clients.FirstOrDefaultAsync(d => d.Id == id);
             if (client == null || scope == null)
             {
-                return await Task.FromResult<int>(0);
+                return 0;
             }
             var clientScopes = new List<ClientScope>();
             foreach (var item in scope)
@@ -108,5 +108,15 @@ namespace IdentityServer4_Manager.Services
             return await _idb.SaveChangesAsync();
         }
 
+        public async Task<int> DeleteScope(int id, string scope)
+        {
+            var client = await _idb.Clients.FirstOrDefaultAsync(d => d.Id == id);
+            if (client == null)
+            {
+                return 0;
+            }
+            client.AllowedScopes.RemoveAll(d => d.Scope == scope);
+            return await _idb.SaveChangesAsync();
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace IdentityServer4_Manager.Model
 {
     public class Claim
     {
-        public string UserId { set; get; }
+        public string Id { set; get; }
         public string ClaimType { set; get; }
         public string ClaimValue { set; get; }
     }

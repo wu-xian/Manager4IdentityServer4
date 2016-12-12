@@ -26,7 +26,7 @@ namespace IdentityServer4_Manager.Controllers
         public async Task<IActionResult> ClaimView(string userId)
         {
             var claims = (await _userService.GetClaims(userId)).ToList();
-            claims.ForEach(d => d.UserId = userId);
+            claims.ForEach(d => d.Id = userId);
             return PartialView("UserClaims", claims);
         }
 
@@ -40,7 +40,7 @@ namespace IdentityServer4_Manager.Controllers
         {
             return PartialView("AddClaims", new Model.Claim()
             {
-                UserId = userId,
+                Id = userId,
                 ClaimType = string.Empty,
                 ClaimValue = string.Empty
             });

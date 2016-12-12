@@ -248,12 +248,29 @@ namespace IdentityServer4_Manager
 
                 #region Client => ClientDisplay
                 cfg.CreateMap<ClientScope, ClientScope>()
-            .ForMember(d => d.Client, u => u.Ignore());
+                    .ForMember(d => d.Client, u => u.Ignore())
+                    ;
                 cfg.CreateMap<Client, Model.ViewModel.ClientDisplay>()
                     .ForMember(d => d.ScopeCount, u => u.MapFrom(item => item.AllowedScopes.Count()))
+                    ;
                 #endregion
 
+                #region IdentityClaim <=> Model.Claim
+                cfg.CreateMap<IdentityClaim, Model.Claim>()
+            .ForMember(d => d.Id, u => u.MapFrom(item => item.Id))
+            .ForMember(d => d.ClaimType, u => u.MapFrom(item => item.Type))
+        ;
+                cfg.CreateMap<Model.Claim, IdentityClaim>()
+                    .ForMember(d => d.Id, u => u.MapFrom(item => item.Id))
+                    .ForMember(d => d.Type, u => u.MapFrom(item => item.ClaimType))
                 ;
+                #endregion
+
+                #region IdentityResource => IdentityResourceDisplay
+                cfg.CreateMap<IdentityResource, Model.ViewModel.IdentityResourceDisplay>()
+                    .ForMember(d => d.ClaimCount, u => u.MapFrom(item => item.UserClaims.Count()))
+                ;
+                #endregion
             });
         }
     }

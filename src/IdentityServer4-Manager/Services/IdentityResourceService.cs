@@ -1,6 +1,8 @@
-﻿using IdentityServer4.EntityFramework.DbContexts;
+﻿using AutoMapper;
+using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4_Manager.Extension;
+using IdentityServer4_Manager.Model;
 using IdentityServer4_Manager.Model.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,13 +23,16 @@ namespace IdentityServer4_Manager.Services
         public async Task<PagingResponse> GetPaged(PagingRequest request)
         {
             int totalCount = 0;
-            var dbResult = await _idb.IdentityResources.Paged(
+            var dbResult = await _idb.IdentityResources
+                .Include(d => d.UserClaims)
+                .Paged(
                 d => true,
                 request.Order,
                 request.Offset,
                 request.Limit,
                 request.isAsc,
                 ref totalCount)
+                .Select(d => Mapper.Map<Model.ViewModel.IdentityResourceDisplay>(d))
                 .ToListAsync();
             return await Task.FromResult<PagingResponse>(new PagingResponse()
             {
@@ -49,7 +54,53 @@ namespace IdentityServer4_Manager.Services
 
         public async Task<int> Update(IdentityResource identityResource)
         {
-            return await Task.FromResult<int>(1);
+            _idb.Update(identityResource);
+            return await _idb.SaveChangesAsync();
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            _idb.IdentityResources.Remove(new IdentityResource()
+            {
+                Id = id
+            });
+            return await _idb.SaveChangesAsync();
+        }
+
+        public async Task<List<Claim>> GetClaimsById(int id)
+        {
+            var identityResource = await _idb.IdentityResources.FirstOrDefaultAsync(d => d.Id == id);
+            if (identityResource == null)
+                return null;
+            return identityResource.UserClaims.Select(d => Mapper.Map<Model.Claim>(d)).ToList();
+        }
+
+        public async Task<int> UpdateClaims(int id, List<string> claims)
+        {
+            var identityResource = await _idb.IdentityResources.FirstOrDefaultAsync(d => d.Id == id);
+            if (identityResource == null)
+                return 0;
+            var identityClaims = new List<IdentityClaim>();
+            foreach (var item in claims)
+            {
+                identityClaims.Add(new IdentityClaim()
+                {
+                    IdentityResource = identityResource,
+                    Type = item
+                });
+            }
+            return await _idb.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteClaims(int id, int claimId)
+        {
+            var identityResource = await _idb.IdentityResources.FirstOrDefaultAsync(d => d.Id == id);
+            if (identityResource == null)
+            {
+                return 0;
+            }
+            identityResource.UserClaims.RemoveAll(d => d.Id == claimId);
+            return await _idb.SaveChangesAsync();
         }
     }
 }

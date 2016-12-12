@@ -67,21 +67,17 @@ namespace MvcClient
             {
                 Authority = "http://localhost:9090",
                 AuthenticationScheme = "oidc",
-
                 ClientId = "mvc-client-one",
                 SaveTokens = true,
                 SignInScheme = "Cookies",
                 ClientSecret = "mvc".Sha256(),
-
+                RequireHttpsMetadata = false,
                 TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                 {
                     RoleClaimType = JwtClaimTypes.Role,
                     NameClaimType = JwtClaimTypes.Name
 
                 },
-                //CallbackPath = "/home/index",
-                RequireHttpsMetadata = false
-                ,
                 Scope = {
                         "MVC.ADMIN",
                         "MVC.USER",
