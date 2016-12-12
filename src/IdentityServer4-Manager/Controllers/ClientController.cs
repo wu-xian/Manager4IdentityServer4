@@ -40,6 +40,11 @@ namespace IdentityServer4_Manager.Controllers
             return Json(await _clientService.UpdateScope(id, scopes));
         }
 
+        public async Task<IActionResult> DeleteScopes(int id, string scope)
+        {
+            return Json(await _clientService.DeleteScope(id, scope));
+        }
+
         public async Task<IActionResult> Get(int id)
         {
             var client = _clientService.GetById(id);

@@ -90,7 +90,9 @@ namespace IdentityServer4_Manager.Services
 
         public async Task<int> UpdateScope(int id, List<string> scope)
         {
-            var client = await _idb.Clients.FirstOrDefaultAsync(d => d.Id == id);
+            var client = await _idb.Clients
+                .Include(d => d.AllowedScopes)
+                .FirstOrDefaultAsync(d => d.Id == id);
             if (client == null || scope == null)
             {
                 return 0;
@@ -111,7 +113,7 @@ namespace IdentityServer4_Manager.Services
 
         public async Task<int> DeleteScope(int id, string scope)
         {
-            var client = await _idb.Clients.FirstOrDefaultAsync(d => d.Id == id);
+            var client = await _idb.Clients.Include(d => d.AllowedScopes).FirstOrDefaultAsync(d => d.Id == id);
             if (client == null)
             {
                 return 0;

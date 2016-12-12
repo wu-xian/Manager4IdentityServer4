@@ -121,7 +121,7 @@ function tableInit() {
     }
 
     $('#tb_client').bootstrapTable({
-        url: '/client/getclients',
+        url: '/client/getpaged',
         pagination: true,
         pageNumber: 1,
         pageSize: 5,
