@@ -22,9 +22,16 @@ namespace IdentityServer4_Manager.Controllers
             return View();
         }
 
-        public async Task<IActionResult> AddClientView()
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
-            return PartialView("AddClient");
+            return PartialView("Create");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(string clientName, string clientUri)
+        {
+            return Json(await _clientService.Create(clientName, clientUri));
         }
 
         public async Task<IActionResult> GetPaged(PagingRequest request, string clientId, string clientName)
@@ -60,22 +67,10 @@ namespace IdentityServer4_Manager.Controllers
             return Json(await _clientService.DeleteScope(id, scope));
         }
 
-        public async Task<IActionResult> Get(int id)
-        {
-            var client = _clientService.GetById(id);
-            return PartialView("Get", client);
-        }
-
-        public async Task<IActionResult> Create(string clientName, string clientUri)
-        {
-            _clientService.Create(clientName, clientUri);
-            return Content("123");
-        }
 
         public async Task<IActionResult> RemoveClient(int id)
         {
-            await _clientService.Delete(id);
-            return Content("asd");
+            return Json(await _clientService.Delete(id));
         }
     }
 }

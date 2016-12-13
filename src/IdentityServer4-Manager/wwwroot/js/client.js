@@ -148,7 +148,7 @@ function eventInit() {
     $(document).on('click', "#add", function () {
         $("#clientModal").modal('show');
         $("#contentBody").html($.app.loadingConstant);
-        $.app.get('/client/addClientView',
+        $.app.get('/client/create',
             {},
             function (responseView) {
                 $("#contentBody").html("");

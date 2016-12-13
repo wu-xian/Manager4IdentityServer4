@@ -58,13 +58,13 @@ namespace IdentityServer4_Manager.Services
             return await _idb.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task<int> Delete(int id)
         {
             _idb.Clients.Remove(new Client()
             {
                 Id = id
             });
-            await _idb.SaveChangesAsync();
+            return await _idb.SaveChangesAsync();
         }
 
         public async Task<int> Update(Client client)

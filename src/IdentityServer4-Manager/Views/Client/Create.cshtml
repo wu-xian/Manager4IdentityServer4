@@ -40,7 +40,7 @@
         $.app.setLoadingBtn("#btn_create_client", function () {
             $.ajax({
                 url: '/client/create',
-                method: 'GET',
+                method: 'POST',
                 data: {
                     clientName: $("#ClientName").val(),
                     clientId: $("#ClientUri").val()
