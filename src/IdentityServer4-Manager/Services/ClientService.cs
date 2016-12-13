@@ -73,6 +73,30 @@ namespace IdentityServer4_Manager.Services
             return await _idb.SaveChangesAsync();
         }
 
+        public async Task<Client> Detail(int id)
+        {
+            return await _idb.Clients
+                .Include(d => d.AllowedScopes)
+                .Include(d => d.ClientSecrets)
+                .Include(d => d.RedirectUris)
+                .Include(d => d.PostLogoutRedirectUris)
+                .Include(d => d.Claims)
+                .Include(d => d.AllowedCorsOrigins)
+                .Include(d => d.AllowedGrantTypes)
+                .FirstOrDefaultAsync(d => d.Id == id);
+        }
+
+        public async Task<int> Change(Client client)
+        {
+            var db_client = _idb.Clients.Remove(new Client()
+            {
+                Id = client.Id
+            });
+            await _idb.SaveChangesAsync();
+            _idb.Clients.Add(client);
+            return await _idb.SaveChangesAsync();
+        }
+
         public async Task<Client> GetById(int id)
         {
             return await _idb.Clients.Where(d => d.Id == id).AsNoTracking().FirstOrDefaultAsync();

@@ -3,41 +3,29 @@
     eventInit();
 })
 
-function getScopes(id) {
-    $("#clientModal").modal('show');
-    $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/client/getScopes',
-        {
-            id: id,
-        },
-        function (responseView) {
-            $("#contentBody").html("");
-            $("#contentBody").html(responseView);
-        },
-        {});
-}
-
-function getClient(id) {
-    $("#clientModal").modal('show');
-    $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/client/get',
-        {
-            Id: id
-        },
-        function (responseView) {
-            $("#contentBody").html("");
-            $("#contentBody").html(responseView);
-        },
-        {});
-}
-
 function removeClient(id) {
-    $.app.get('/client/removeClient',
+    if (confirm("delete?")) {
+        $.app.get('/client/removeClient',
+            {
+                Id: id
+            },
+            function (responseData) {
+                $.app.msgBox(responseData);
+            },
+            {});
+    }
+}
+
+function getDetail(id) {
+    $("#editorModal").modal('show');
+    //$("#jsoneditor").html($.app.loadingConstant);
+    $.app.get('/client/detail',
         {
             Id: id
         },
-        function (responseData) {
-            $.app.msgBox(responseData);
+        function (responseJson) {
+            //$("#jsoneditor").html("");
+            editor.set(responseJson);
         },
         {});
 }
@@ -60,8 +48,7 @@ function tableInit() {
     function operationFormatter(value, row, index) {
         var scopeCount = row.scopeCount;
         return '<div class="btn-group">' +
-        '<button title="' + scopeCount + ' scopes" onclick="getScopes(\'' + row.id + '\')"><i class="fa fa-bars"></i>' + scopeCount + '</button>' +
-        '<button title"client detaiil" onclick="getClient(\'' + row.id + '\')"><i class="fa fa-bars"></i></button>' +
+            '<button title"client detaiil" onclick="getDetail(\'' + row.id + '\')"><i class="fa fa-eye"></i></button>' +
         '<button title"client detaiil" onclick="removeClient(\'' + row.id + '\')"><i class="fa fa-trash"></i></button>' +
         '</div>';
     }
@@ -136,11 +123,26 @@ function tableInit() {
 
 }
 
+var container = document.getElementById('jsoneditor');
+var options = {};
+var editor = new JSONEditor(container, options);
 function eventInit() {
+
+
 
     //query button
     $.app.setLoadingBtn("#query", function () {
         $("#tb_client").bootstrapTable("refresh");
+    });
+
+    $.app.setLoadingBtn("#btn_change_client", function () {
+        $.app.post('/client/change',
+            editor.get(),
+            function (responseData) {
+                $.app.msgBox(responseData);
+                $.app.resetLoadingBtn("#btn_change_client");
+            },
+            {});
     });
 
     $(document).on('click', "#add", function () {
