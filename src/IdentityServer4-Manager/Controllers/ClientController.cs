@@ -68,7 +68,7 @@ namespace IdentityServer4_Manager.Controllers
         }
 
 
-        public async Task<IActionResult> RemoveClient(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             return Json(await _clientService.Delete(id));
         }

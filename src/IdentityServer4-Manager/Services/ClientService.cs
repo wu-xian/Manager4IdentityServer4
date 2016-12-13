@@ -93,6 +93,7 @@ namespace IdentityServer4_Manager.Services
                 Id = client.Id
             });
             await _idb.SaveChangesAsync();
+            client.Id = 0;
             _idb.Clients.Add(client);
             return await _idb.SaveChangesAsync();
         }

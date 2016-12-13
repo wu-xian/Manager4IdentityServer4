@@ -64,6 +64,27 @@ namespace IdentityServer4_Manager.Services
             return await _idb.SaveChangesAsync();
         }
 
+        public async Task<ApiResource> Detail(int id)
+        {
+            return await _idb.ApiResources
+                .Include(d => d.UserClaims)
+                .Include(d => d.Scopes)
+                .Include(d => d.Secrets)
+                .FirstOrDefaultAsync(d => d.Id == id);
+        }
+
+        public async Task<int> Change(ApiResource apiResource)
+        {
+            _idb.ApiResources.Remove(new ApiResource()
+            {
+                Id = apiResource.Id
+            });
+            await _idb.SaveChangesAsync();
+            apiResource.Id = 0;
+            _idb.ApiResources.Add(apiResource);
+            return await _idb.SaveChangesAsync();
+        }
+
         public async Task<int> UpdateScopes(int id, List<string> scopes)
         {
             var apiResource = await _idb.ApiResources.FirstOrDefaultAsync(d => d.Id == id);

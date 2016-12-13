@@ -3,9 +3,9 @@
     eventInit();
 })
 
-function removeClient(id) {
+function removeIdentityResource(id) {
     if (confirm("delete?")) {
-        $.app.get('/client/delete',
+        $.app.get('/identityResource/delete',
             {
                 Id: id
             },
@@ -19,7 +19,7 @@ function removeClient(id) {
 function getDetail(id) {
     $("#editorModal").modal('show');
     //$("#jsoneditor").html($.app.loadingConstant);
-    $.app.get('/client/detail',
+    $.app.get('/identityResource/detail',
         {
             Id: id
         },
@@ -39,8 +39,8 @@ function tableInit() {
             order: 'Id',
             isAsc: true,
 
-            clientName: $("#clientName").val(),
-            clientId: $("#clientId").val(),
+            clientName: $("#identityName").val(),
+            clientId: $("#identityId").val(),
         };
         return temp;
     }
@@ -49,7 +49,7 @@ function tableInit() {
         var scopeCount = row.scopeCount;
         return '<div class="btn-group">' +
             '<button title"client detaiil" onclick="getDetail(\'' + row.id + '\')"><i class="fa fa-eye"></i></button>' +
-        '<button title"client detaiil" onclick="removeClient(\'' + row.id + '\')"><i class="fa fa-trash"></i></button>' +
+        '<button title"client detaiil" onclick="removeIdentityResource(\'' + row.id + '\')"><i class="fa fa-trash"></i></button>' +
         '</div>';
     }
 
@@ -107,8 +107,8 @@ function tableInit() {
         return '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>';
     }
 
-    $('#tb_client').bootstrapTable({
-        url: '/client/getpaged',
+    $('#tb').bootstrapTable({
+        url: '/identityResource/getpaged',
         pagination: true,
         pageNumber: 1,
         pageSize: 5,
@@ -132,23 +132,23 @@ function eventInit() {
 
     //query button
     $.app.setLoadingBtn("#query", function () {
-        $("#tb_client").bootstrapTable("refresh");
+        $("#tb").bootstrapTable("refresh");
     });
 
-    $.app.setLoadingBtn("#btn_change_client", function () {
-        $.app.post('/client/change',
+    $.app.setLoadingBtn("#btn_change_identityResource", function () {
+        $.app.post('/identityResource/change',
             editor.get(),
             function (responseData) {
                 $.app.msgBox(responseData);
-                $.app.resetLoadingBtn("#btn_change_client");
+                $.app.resetLoadingBtn("#btn_change_identityResource");
             },
             {});
     });
 
     $(document).on('click', "#add", function () {
-        $("#clientModal").modal('show');
+        $("#identityResourceModal").modal('show');
         $("#contentBody").html($.app.loadingConstant);
-        $.app.get('/client/create',
+        $.app.get('/identityResource/create',
             {},
             function (responseView) {
                 $("#contentBody").html("");
