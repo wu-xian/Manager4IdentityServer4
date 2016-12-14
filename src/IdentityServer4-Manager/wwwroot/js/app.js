@@ -21,7 +21,7 @@
         },
         //setLoadingBtn set the style to loading on button click
         setLoadingBtn: function (selector, func, callback) {
-            $(selector).on('click', function () {
+            $(document).on('click', selector, function () {
                 var $this = $(this);
                 $this.button('loading');
                 if (func) {

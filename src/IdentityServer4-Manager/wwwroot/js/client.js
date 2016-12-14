@@ -128,7 +128,24 @@ var options = {};
 var editor = new JSONEditor(container, options);
 function eventInit() {
 
-
+    $.app.setLoadingBtn("#btn_create_client", function () {
+        $.ajax({
+            url: '/client/create',
+            method: 'POST',
+            data: {
+                clientName: $("#ClientName").val(),
+                clientId: $("#ClientUri").val()
+            },
+            success: function (response) {
+                alert(response);
+                $.app.resetLoadingBtn("#btn_create_client");
+            },
+            error: function (info, execption) {
+                alert("请求失败 , info:" + info + ",execption:" + execption);
+                $.app.resetLoadingBtn("#btn_create_claim");
+            }
+        });
+    });
 
     //query button
     $.app.setLoadingBtn("#query", function () {
