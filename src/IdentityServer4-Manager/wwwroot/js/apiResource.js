@@ -47,8 +47,13 @@ function tableInit() {
 
     function operationFormatter(value, row, index) {
         var scopeCount = row.scopeCount;
+        var secretCount = row.secretCount;
+        var claimCount = row.claimCount;
         return '<div class="btn-group">' +
-            '<button title"client detaiil" onclick="getDetail(\'' + row.id + '\')"><i class="fa fa-eye"></i></button>' +
+            '<button title="' + scopeCount + 'scopes"><i class="fa fa-bars"></i>' + scopeCount + '</button>' +
+            '<button title="' + secretCount + 'secrets"><i class="fa fa-bars"></i>' + secretCount + '</button>' +
+            '<button title="' + claimCount + '+claims"><i class="fa fa-bars"></i>' + claimCount + '</button>' +
+        '<button title"client detaiil" onclick="getDetail(\'' + row.id + '\')"><i class="fa fa-eye"></i></button>' +
         '<button title"client detaiil" onclick="removeApiResource(\'' + row.id + '\')"><i class="fa fa-trash"></i></button>' +
         '</div>';
     }
@@ -71,24 +76,24 @@ function tableInit() {
             width: 150
         },
         {
-            field: 'clientName',
-            title: 'User Name',
+            field: 'name',
+            title: 'apiResource Name',
             align: 'center',
             valign: 'middle',
             visible: true,
             width: 250
         },
         {
-            field: 'clientId',
-            title: 'Client ID',
+            field: 'displayName',
+            title: 'Display Name',
             align: 'center',
             valign: 'middle',
             visible: true,
             width: 250
         },
         {
-            field: 'clientUri',
-            title: 'Client URI',
+            field: 'description',
+            title: 'Description',
             align: 'center',
             valign: 'middle',
             visible: true,
@@ -127,8 +132,19 @@ var container = document.getElementById('jsoneditor');
 var options = {};
 var editor = new JSONEditor(container, options);
 function eventInit() {
-
-
+    //create api resource
+    $.app.setLoadingBtn("#btn_create_apiResource", function () {
+        $.app.post('/apiResource/create', {
+            name: $("#Name").val(),
+            displayName: $("#DisplayName").val(),
+            description: $("#Description").val()
+        },
+        function (responseData) {
+            $.app.msgBox(responseData);
+            $.app.resetLoadingBtn("#btn_create_apiResource");
+        },
+        {});
+    });
 
     //query button
     $.app.setLoadingBtn("#query", function () {

@@ -115,6 +115,8 @@ namespace IdentityServer4_Manager
             services.AddScoped<UserService>();
             services.AddScoped<UserLoginService>();
             services.AddScoped<ClientService>();
+            services.AddScoped<IdentityResourceService>();
+            services.AddScoped<ApiResourceService>();
         }
 
         private void AddIdentityServer(IServiceCollection services)

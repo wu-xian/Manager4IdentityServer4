@@ -46,10 +46,11 @@ function tableInit() {
     }
 
     function operationFormatter(value, row, index) {
-        var scopeCount = row.scopeCount;
+        var claimCount = row.claimCount;
         return '<div class="btn-group">' +
-            '<button title"client detaiil" onclick="getDetail(\'' + row.id + '\')"><i class="fa fa-eye"></i></button>' +
-        '<button title"client detaiil" onclick="removeIdentityResource(\'' + row.id + '\')"><i class="fa fa-trash"></i></button>' +
+        '<button title="' + claimCount + 'claims"><i class="fa fa-bars"></i>' + claimCount + '</button>' +
+        '<button title="client detaiil" onclick="getDetail(\'' + row.id + '\')"><i class="fa fa-eye"></i></button>' +
+        '<button title="client detaiil" onclick="removeIdentityResource(\'' + row.id + '\')"><i class="fa fa-trash"></i></button>' +
         '</div>';
     }
 
@@ -71,24 +72,16 @@ function tableInit() {
             width: 150
         },
         {
-            field: 'clientName',
-            title: 'User Name',
+            field: 'name',
+            title: 'Name',
             align: 'center',
             valign: 'middle',
             visible: true,
             width: 250
         },
         {
-            field: 'clientId',
-            title: 'Client ID',
-            align: 'center',
-            valign: 'middle',
-            visible: true,
-            width: 250
-        },
-        {
-            field: 'clientUri',
-            title: 'Client URI',
+            field: 'displayName',
+            title: 'DisplayName',
             align: 'center',
             valign: 'middle',
             visible: true,
@@ -128,7 +121,19 @@ var options = {};
 var editor = new JSONEditor(container, options);
 function eventInit() {
 
-
+    //create identity resource
+    $.app.setLoadingBtn("#btn_create_identityResource", function () {
+        $.app.post('/identityResource/create', {
+            name: $("#Name").val(),
+            displayName: $("#DisplayName").val(),
+            description: $("#Description").val()
+        },
+        function (responseData) {
+            $.app.msgBox(responseData);
+            $.app.resetLoadingBtn("#btn_create_identityResource");
+        },
+        {});
+    });
 
     //query button
     $.app.setLoadingBtn("#query", function () {
