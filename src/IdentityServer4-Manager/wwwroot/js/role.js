@@ -3,88 +3,18 @@
     eventInit();
 })
 
-function getUserClaims(userId) {
-    $("#userModal").modal('show');
+function getClaims(roleId) {
+    $("#operationModal").modal('show');
     $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/user/claimView',
+    $.app.get('/role/claims',
             {
-                userId: userId
+                roleId: roleId
             },
             function (responseView) {
                 $("#contentBody").html("");
                 $("#contentBody").html(responseView);
             },
             {});
-}
-
-function getUserRoles(userId) {
-    $("#userModal").modal('show');
-    $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/user/roleView',
-        {
-            userId: userId
-        },
-        function (responseView) {
-            $("#contentBody").html("");
-            $("#contentBody").html(responseView);
-        },
-        {});
-}
-
-function removeUserClaim(userId, claimType, claimValue) {
-    $.app.get('/user/removeClaim',
-    {
-        claimType: claimType,
-        claimValue: claimValue,
-        userId: userId
-    },
-    function (responseView) {
-        getUserClaims(userId);
-    },
-    {});
-}
-
-function addUserClaimsView(userId) {
-    $("#userModal").modal('show');
-    $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/user/addClaimsView',
-        {
-            userId: userId
-        },
-        function (responseView) {
-            $("#contentBody").html("");
-            $("#contentBody").html(responseView);
-        },
-        {});
-}
-
-function addUserRoleView(userId) {
-    $("#userModal").modal('show');
-    $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/user/addUserRoleView',
-        {
-            userId: userId
-        },
-        function (responseView) {
-            $("#contentBody").html("");
-            $("#contentBody").html(responseView);
-        },
-        {});
-}
-
-function addUserRoles(userId, roleName) {
-    $("#userModal").modal('show');
-    $("#contentBody").html($.app.loadingConstant);
-    $.app.get('/user/addToRole',
-        {
-            userId: userId,
-            roleName: roleName
-        },
-        function (responseView) {
-            $("#contentBody").html("");
-            $("#contentBody").html(responseView);
-        },
-        {});
 }
 
 function tableInit() {

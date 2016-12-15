@@ -113,6 +113,7 @@ namespace IdentityServer4_Manager
         private void AddServices(IServiceCollection services)
         {
             services.AddScoped<UserService>();
+            services.AddScoped<RoleService>();
             services.AddScoped<UserLoginService>();
             services.AddScoped<ClientService>();
             services.AddScoped<IdentityResourceService>();

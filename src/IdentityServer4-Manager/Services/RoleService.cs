@@ -23,6 +23,8 @@ namespace IdentityServer4_Manager.Services
         {
             int totalCount = 0;
             var dbResult = await _roleManager.Roles
+                .Include(d => d.Claims)
+                .Include(d => d.Users)
                 .Paged(
                     d => true,
                     pagingRequest.Order,
@@ -31,7 +33,8 @@ namespace IdentityServer4_Manager.Services
                     pagingRequest.isAsc,
                     ref totalCount
                     )
-                 .ToListAsync();
+                .Select(d => Mapper.Map<RoleDisplay>(d))
+                .ToListAsync();
             return new PagingResponse()
             {
                 Rows = dbResult,
