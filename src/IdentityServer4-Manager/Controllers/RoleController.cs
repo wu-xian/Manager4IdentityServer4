@@ -60,6 +60,7 @@ namespace IdentityServer4_Manager.Controllers
         [HttpGet]
         public async Task<IActionResult> Claims(string roleId)
         {
+            ViewBag.RoleId = roleId;
             var claims = await _roleService.GetClaims(roleId);
             return PartialView("Claims", claims);
         }

@@ -17,6 +17,42 @@ function getClaims(roleId) {
             {});
 }
 
+function createClaim() {
+    var roleId = $("#claimRoleId").val();
+    var claimType = $("#newClaimType").val();
+    var claimValue = $("#newClaimValue").val();
+    if (claimType && claimValue) {
+        $.app.post('/role/createClaim', {
+            roleId: roleId,
+            claimType: claimType,
+            claimValue: claimValue
+        }, function (responseData) {
+            alert(JSON.stringify(responseData));
+        },
+        function () {
+            alert("err");
+            $.app.resetLoadingBtn("#btn_create_claim");
+        },
+        function () {
+            alert("complete");
+            $.app.resetLoadingBtn("#btn_create_claim");
+        });
+    }
+    else {
+        alert('111');
+    }
+}
+
+function addNewLine() {
+    if (!$("#newLine")[0]) {
+        var newLine = '<tr id="newLine">' +
+            '<td> <button id="btn_create_claim" data-loading-text="<i class=\'fa fa-spinner fa-spin\'></i>Saving..." title="save the claim" ><i class="fa fa-users"></i>Save</button> </td>' +
+            '<td><input id="newClaimType" type="text" /></td><td><input id="newClaimValue" type="text" /></td>' +
+            '</tr>';
+        $("#roleClaim tbody").prepend(newLine);
+    }
+}
+
 function tableInit() {
 
     function queryParams(params) {
@@ -98,6 +134,11 @@ function tableInit() {
 }
 
 function eventInit() {
+
+    //save new line
+    $.app.setLoadingBtn("#btn_create_claim", function () {
+        createClaim();
+    });
 
     //query button
     $.app.setLoadingBtn("#query", function () {

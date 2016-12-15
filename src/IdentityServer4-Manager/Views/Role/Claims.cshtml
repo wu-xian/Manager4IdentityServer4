@@ -12,8 +12,11 @@
     </h4>
 </div>
 <div id="modal-body" class="modal-body">
-    <table id="userClaims" class="table table-bordered">
-        <thead><button type="button" class="btn btn-default btn-block">Create Claim</button></thead>
+    <input id="claimRoleId" type="hidden" value="@ViewBag.RoleId" />
+    <table id="roleClaim" class="table table-bordered">
+        <thead>
+            <button type="button" onclick="addNewLine()" class="btn btn-default btn-block">Create Claim</button>
+        </thead>
         <tr>
             <th>Operation</th>
             <th>ClaimType</th>
