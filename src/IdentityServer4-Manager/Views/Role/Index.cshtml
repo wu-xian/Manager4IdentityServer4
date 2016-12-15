@@ -4,13 +4,12 @@
 @{
 }
 @section page{
-    <script src="~/js/user.js"></script>
-    <script src="~/js/galaxies.pipeline.js"></script>
+    <script src="~/js/role.js"></script>
 }
 @{
-    ViewData["Title"] = "User/Index";
+    ViewData["Title"] = "Role/Index";
 }
-@model IdentityServer4_Manager.Model.ViewModel.UserCondition
+@model IdentityServer4_Manager.Model.ViewModel.RoleCondition
 
 <div class="box">
     <div class="box-header with-border">
@@ -31,13 +30,13 @@
         <div class="col-xs-4">
             <div class="input-group">
                 <span class="input-group-addon">ID</span>
-                <input type="text" class="form-control" asp-for="UserId" placeholder="User Id">
+                <input type="text" class="form-control" asp-for="Id" placeholder="Role Id">
             </div>
         </div>
         <div class="col-xs-4">
             <div class="input-group">
                 <span class="input-group-addon">User Name</span>
-                <input type="text" class="form-control" asp-for="UserName" placeholder="User Name">
+                <input type="text" class="form-control" asp-for="Name" placeholder="Role Name">
             </div>
         </div>
     </div>
@@ -45,7 +44,7 @@
 
 <div class="box" id="boxer">
     <div class="box-body">
-        <table id="tb_user" class="table table-striped"></table>
+        <table id="tb" class="table table-striped"></table>
     </div>
 </div>
 

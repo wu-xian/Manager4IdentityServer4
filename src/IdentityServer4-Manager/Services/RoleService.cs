@@ -39,6 +39,11 @@ namespace IdentityServer4_Manager.Services
             };
         }
 
+        public async Task<IdentityRole> GetById(string id)
+        {
+            return await _roleManager.FindByIdAsync(id);
+        }
+
         public async Task<IdentityResult> Create(string roleName)
         {
             return await _roleManager.CreateAsync(new IdentityRole()

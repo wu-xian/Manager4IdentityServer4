@@ -10,7 +10,7 @@ namespace IdentityServer4_Manager.Model.ViewModel
         public string RoleId { set; get; }
         public string RoleName { set; get; }
 
-        public List<Model.Claim> RoleClaims { set; get; }
-        public List<Model.RoleUser> RoleUsers { set; get; }
+        public int ClaimCount { set; get; }
+        public int UserCount { set; get; }
     }
 }
