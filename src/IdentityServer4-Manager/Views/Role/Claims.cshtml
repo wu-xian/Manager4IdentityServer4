@@ -28,8 +28,7 @@
             {
                 <tr>
                     <td>
-                        <button onclick="createRoleClaim('@item.Id','@item.ClaimType','@item.ClaimValue')"><i class="fa fa-trash"></i></button>
-                        <button onclick="removeRoleClaim('@item.Id','@item.ClaimType','@item.ClaimValue')"><i class="fa fa-trash"></i></button>
+                        <button onclick="deleteRoleClaim('@ViewBag.RoleId','@item.ClaimType')"><i class="fa fa-trash"></i></button>
                     </td>
                     <td>@item.ClaimType</td>
                     <td>@item.ClaimValue</td>
@@ -41,5 +40,4 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button id="saveChange" type="button" class="btn btn-primary">OK</button>
 </div>

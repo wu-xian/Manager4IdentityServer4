@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="modalTitle">
+        Create Role
+    </h4>
+</div>
+<div id="modal-body" class="modal-body">
+    <table id="role" class="table table-bordered">
+        <tr>
+            <td>Name</td>
+            <td>
+                <input id="txt_role_name" class="form-control" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>NormalizedName</td>
+            <td>
+                <input id="txt_role_normalizedname" class="form-control" type="text" />
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button id="btn_create_role" type="button" class="btn btn-primary" data-loading-text="<i class='fa fa-spinner fa-spin '></i>&nbsp; Creating...">Create</button>
+</div>

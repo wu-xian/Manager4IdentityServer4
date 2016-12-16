@@ -9,6 +9,7 @@ namespace IdentityServer4_Manager.Model.ViewModel
     {
         public string RoleId { set; get; }
         public string RoleName { set; get; }
+        public string NormalizeName { set; get; }
 
         public int ClaimCount { set; get; }
         public int UserCount { set; get; }

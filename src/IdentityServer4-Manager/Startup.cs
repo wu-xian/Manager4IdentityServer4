@@ -228,6 +228,7 @@ namespace IdentityServer4_Manager
                 cfg.CreateMap<IdentityRole<string>, Model.ViewModel.RoleDisplay>()
                     .ForMember(d => d.RoleId, u => u.MapFrom(item => item.Id))
                     .ForMember(d => d.RoleName, u => u.MapFrom(item => item.Name))
+                    .ForMember(d => d.NormalizeName, u => u.MapFrom(item => item.NormalizedName))
                     .ForMember(d => d.UserCount, u => u.MapFrom(item => item.Users.Count()))
                     .ForMember(d => d.ClaimCount, u => u.MapFrom(item => item.Claims.Count()))
             ;

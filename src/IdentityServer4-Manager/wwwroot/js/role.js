@@ -17,6 +17,18 @@ function getClaims(roleId) {
             {});
 }
 
+function getCreateView() {
+    $("#operationModal").modal('show');
+    $("#contentBody").html($.app.loadingConstant);
+    $.app.get('/role/create',
+            {},
+            function (responseView) {
+                $("#contentBody").html("");
+                $("#contentBody").html(responseView);
+            },
+            {});
+}
+
 function createClaim() {
     var roleId = $("#claimRoleId").val();
     var claimType = $("#newClaimType").val();
@@ -27,20 +39,50 @@ function createClaim() {
             claimType: claimType,
             claimValue: claimValue
         }, function (responseData) {
-            alert(JSON.stringify(responseData));
+            getClaims(roleId);
         },
         function () {
-            alert("err");
             $.app.resetLoadingBtn("#btn_create_claim");
         },
         function () {
-            alert("complete");
             $.app.resetLoadingBtn("#btn_create_claim");
         });
     }
     else {
-        alert('111');
+        $.app.msgBox("claim type and claim value could not be empty");
     }
+}
+
+function deleteRoleClaim(roleId, claimType) {
+    var requestData = {
+        roleId: roleId,
+        claimType: claimType
+    };
+    $.app.post('/role/deleteClaim',
+        requestData,
+        function (responseData) {
+            getClaims(requestData.roleId);
+            $.app.msgBox(JSON.stringify(responseData));
+        },
+        {});
+}
+
+function createRole() {
+    var newRole = {
+        roleName: $("#txt_role_name").val(),
+        roleNormalizedName: $("#txt_role_normalizedname").val()
+    };
+    $.app.post('/role/create',
+        newRole,
+        function () {
+            $("#operationModal").modal('hide');
+            tableReload();
+        },
+        {})
+}
+
+function tableReload() {
+    $("#tb").bootstrapTable("refresh");
 }
 
 function addNewLine() {
@@ -98,7 +140,15 @@ function tableInit() {
         },
         {
             field: 'roleName',
-            title: 'User Name',
+            title: 'Role Name',
+            align: 'center',
+            valign: 'middle',
+            visible: true,
+            width: 250
+        },
+        {
+            field: 'normalizeName',
+            title: 'Normalize Name',
             align: 'center',
             valign: 'middle',
             visible: true,
@@ -135,6 +185,11 @@ function tableInit() {
 
 function eventInit() {
 
+    //save new role
+    $.app.setLoadingBtn("#btn_create_role", function () {
+        createRole();
+    })
+
     //save new line
     $.app.setLoadingBtn("#btn_create_claim", function () {
         createClaim();
@@ -142,11 +197,10 @@ function eventInit() {
 
     //query button
     $.app.setLoadingBtn("#query", function () {
-        $("#tb").bootstrapTable("refresh");
+        tableReload();
     });
 
-    $(document).on('click', "#add", function () {
-        $("#contentBody").append("123");
-        $("#userModal").modal('show');
+    $(document).on('click', "#btn_open_createview", function () {
+        getCreateView();
     });
 }
