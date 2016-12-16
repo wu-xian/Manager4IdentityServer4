@@ -57,6 +57,7 @@ namespace IdentityServer4_Manager.Controllers
             return Json(await _roleService.Delete(roleId));
         }
 
+        #region Claim
         [HttpGet]
         public async Task<IActionResult> Claims(string roleId)
         {
@@ -76,5 +77,22 @@ namespace IdentityServer4_Manager.Controllers
         {
             return Json(await _roleService.DeleteClaims(roleId, claimType));
         }
+        #endregion
+
+        #region User
+        [HttpGet]
+        public async Task<IActionResult> Users(string roleName)
+        {
+            var users = await _roleService.GetUsers(roleName);
+            ViewBag.RoleName = roleName;
+            return PartialView("Users", users);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUserFromRole(string roleName, string userId)
+        {
+            return Json(await _roleService.DeleteUserFromRole(roleName, userId));
+        }
+        #endregion
     }
 }

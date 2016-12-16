@@ -247,13 +247,19 @@ namespace IdentityServer4_Manager
 
                 #endregion
 
+                #region Model.IdentityUser => Model.RoleUser
+                cfg.CreateMap<Model.IdentityUser, Model.RoleUser>()
+                    .ForMember(d => d.UserId, u => u.MapFrom(item => item.Id))
+                    .ForMember(d => d.UserName, u => u.MapFrom(item => item.UserName))
+                ;
+                #endregion
+
                 #region ??
                 cfg.CreateMap<IdentityUser<string>, Model.ViewModel.UserDisplay>();
                 cfg.CreateMap<IdentityRole<string>, Model.ViewModel.UserDisplay>();
                 cfg.CreateMap<IdentityRoleClaim<int>, Model.Claim>();
                 cfg.CreateMap<Model.Claim, IdentityUserClaim<int>>();
                 cfg.CreateMap<Model.Claim, IdentityRoleClaim<int>>();
-                cfg.CreateMap<IdentityUser<string>, Model.RoleUser>();
                 #endregion
 
                 #region Client => ClientDisplay

@@ -17,6 +17,20 @@ function getClaims(roleId) {
             {});
 }
 
+function getUsers(roleName) {
+    $("#operationModal").modal('show');
+    $("#contentBody").html($.app.loadingConstant);
+    $.app.get('/role/users',
+            {
+                roleName: roleName
+            },
+            function (responseView) {
+                $("#contentBody").html("");
+                $("#contentBody").html(responseView);
+            },
+            {});
+}
+
 function getCreateView() {
     $("#operationModal").modal('show');
     $("#contentBody").html($.app.loadingConstant);
@@ -53,6 +67,20 @@ function createClaim() {
     }
 }
 
+function createRole() {
+    var newRole = {
+        roleName: $("#txt_role_name").val(),
+        roleNormalizedName: $("#txt_role_normalizedname").val()
+    };
+    $.app.post('/role/create',
+        newRole,
+        function () {
+            $("#operationModal").modal('hide');
+            tableReload();
+        },
+        {})
+}
+
 function deleteRoleClaim(roleId, claimType) {
     var requestData = {
         roleId: roleId,
@@ -67,18 +95,33 @@ function deleteRoleClaim(roleId, claimType) {
         {});
 }
 
-function createRole() {
-    var newRole = {
-        roleName: $("#txt_role_name").val(),
-        roleNormalizedName: $("#txt_role_normalizedname").val()
-    };
-    $.app.post('/role/create',
-        newRole,
-        function () {
-            $("#operationModal").modal('hide');
-            tableReload();
-        },
-        {})
+function deleteRoleUser(roleName, userId) {
+    if (confirm("delete?")) {
+        var requestData = {
+            roleName: roleName,
+            userId: userId
+        };
+        $.app.post('/role/deleteuserfromrole',
+            requestData,
+            function (responseData) {
+                getUsers();
+                $.app.msgBox(JSON.stringify(responseData));
+            },
+            {});
+    }
+}
+
+function deleteRole(roleId) {
+    if (confirm("delete?")) {
+        $.app.post('/role/delete',
+            {
+                roleId: roleId
+            },
+            function (responseData) {
+                $.app.msgBox(JSON.stringify(responseData));
+                tableReload();
+            });
+    }
 }
 
 function tableReload() {
@@ -114,10 +157,9 @@ function tableInit() {
         var claimCount = row.claimCount;
         var userCount = row.userCount;
         return '<div class="btn-group">' +
-        '<button title="' + claimCount + ' claims" onclick="getClaims(\'' + row.roleId + '\')"><i class="fa fa-users"></i>' + claimCount + '</button>' +
-        '<button title="' + userCount + ' users" onclick="getUsers(\'' + row.roleId + '\')"><i class="glyphicon glyphicon-list"></i>' + userCount + '</button>' +
-        '<button title="edit role"  onclick="editRole(\'' + row.roleId + '\')"><i class="fa fa-plus"></i></button>' +
-        '<button title="remove"  onclick="removeRole(\'' + row.roleId + '\')"><i class="fa fa-plus-square"></i></button>' +
+        '<button title="' + claimCount + ' claims" onclick="getClaims(\'' + row.roleId + '\')"><i class="glyphicon glyphicon-list"></i>' + claimCount + '</button>' +
+        '<button title="' + userCount + ' users" onclick="getUsers(\'' + row.roleName + '\')"><i class="fa fa-users"></i>' + userCount + '</button>' +
+        '<button title="remove"  onclick="deleteRole(\'' + row.roleId + '\')"><i class="fa fa-trash"></i></button>' +
         '</div>';
     }
 

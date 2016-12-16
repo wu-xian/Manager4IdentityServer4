@@ -14,9 +14,11 @@ namespace IdentityServer4_Manager.Services
     public class RoleService
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        public RoleService(RoleManager<IdentityRole> roleManager)
+        private readonly UserManager<Model.IdentityUser> _userManager;
+        public RoleService(RoleManager<IdentityRole> roleManager, UserManager<Model.IdentityUser> userManager)
         {
             _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         public async Task<PagingResponse> GetPaged(PagingRequest pagingRequest)
@@ -99,6 +101,23 @@ namespace IdentityServer4_Manager.Services
                 return null;
             var claim = (await _roleManager.GetClaimsAsync(role)).FirstOrDefault(d => d.Type == claimType);
             return await _roleManager.RemoveClaimAsync(role, claim);
+        }
+
+        public async Task<List<Model.RoleUser>> GetUsers(string roleName)
+        {
+            return (await _userManager.GetUsersInRoleAsync(roleName))
+                .Select(d => Mapper.Map<Model.RoleUser>(d))
+                .ToList();
+        }
+
+        public async Task<IdentityResult> DeleteUserFromRole(string roleName, string userId)
+        {
+            var usr = await _userManager.FindByIdAsync(userId);
+            if (usr == null)
+            {
+                return null;
+            }
+            return await _userManager.RemoveFromRoleAsync(usr, roleName);
         }
     }
 }
