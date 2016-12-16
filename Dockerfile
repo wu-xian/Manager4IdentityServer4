@@ -1,7 +1,7 @@
 FROM microsoft/dotnet
 
-COPY ./src/IdentityServer4-Manager /app/IdentityServer4-Manager
-WORKDIR /app/IdentityServer4-Manager
+COPY ./src/IdentityServer4-Manager /app/
+WORKDIR /app/jenkins-test
 #RUN ["dotnet", "restore"]
 #CMD rm /app/project.lock.json
 #CMD rm /app/project.json
