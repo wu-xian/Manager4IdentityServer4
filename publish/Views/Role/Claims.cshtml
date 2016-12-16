@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IList<IdentityServer4_Manager.Model.Claim>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="modalTitle">
+        Role Claims
+    </h4>
+</div>
+<div id="modal-body" class="modal-body">
+    <input id="claimRoleId" type="hidden" value="@ViewBag.RoleId" />
+    <table id="roleClaim" class="table table-bordered">
+        <thead>
+            <button type="button" onclick="addNewLine()" class="btn btn-default btn-block">Create Claim</button>
+        </thead>
+        <tr>
+            <th>Operation</th>
+            <th>ClaimType</th>
+            <th>ClaimValue</th>
+        </tr>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <button onclick="deleteRoleClaim('@ViewBag.RoleId','@item.ClaimType')"><i class="fa fa-trash"></i></button>
+                    </td>
+                    <td>@item.ClaimType</td>
+                    <td>@item.ClaimValue</td>
+                </tr>
+            }
+        }
+    </table>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>

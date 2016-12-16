@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<IdentityServer4_Manager.Model.Claim>
+    Hello World
+
+
+<br />
+
+
+    Im Home.Index
+
+<br />
+
+@{
+    foreach (var item in Model)
+    {
+        <text> @item.ClaimType </text>
+        <text> @item.ClaimValue </text>
+        <br />
+    }
+}

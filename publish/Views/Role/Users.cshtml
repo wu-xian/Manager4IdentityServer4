@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IList<IdentityServer4_Manager.Model.RoleUser>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="modalTitle">
+        Role Claims
+    </h4>
+</div>
+<div id="modal-body" class="modal-body">
+    <input id="userRoleName" type="hidden" value="@ViewBag.RoleName" />
+    <table id="roleUser" class="table table-bordered">
+        <tr>
+            <th>Operation</th>
+            <th>User ID</th>
+            <th>User Name</th>
+        </tr>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <button title="remove user from the role" onclick="deleteRoleUser('@ViewBag.RoleName','@item.UserId')"><i class="fa fa-trash"></i></button>
+                    </td>
+                    <td>@item.UserId</td>
+                    <td>@item.UserName</td>
+                </tr>
+            }
+        }
+    </table>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
