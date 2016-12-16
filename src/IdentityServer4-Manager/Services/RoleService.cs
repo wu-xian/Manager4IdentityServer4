@@ -70,10 +70,15 @@ namespace IdentityServer4_Manager.Services
 
         public async Task<IdentityResult> Delete(string id)
         {
-            return await _roleManager.DeleteAsync(new IdentityRole()
+            var IdRole = await _roleManager.FindByIdAsync(id);
+            if (IdRole != null)
             {
-                Id = id
-            });
+                return await _roleManager.DeleteAsync(IdRole);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<List<Model.Claim>> GetClaims(string id)

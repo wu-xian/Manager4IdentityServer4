@@ -16,11 +16,12 @@ namespace IdentityServer4_Manager.Controllers
             _roleService = roleService;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult Index()
         {
             return View();
         }
-
+        
         public async Task<IActionResult> GetPaged(PagingRequest request, RoleCondition condition)
         {
             return Json(await _roleService.GetPaged(request));
@@ -35,7 +36,7 @@ namespace IdentityServer4_Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(string roleName)
         {
-            return Json(_roleService.Create(roleName));
+            return Json(await _roleService.Create(roleName));
         }
 
         [HttpGet]

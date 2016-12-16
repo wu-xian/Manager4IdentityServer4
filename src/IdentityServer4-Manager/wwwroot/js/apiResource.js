@@ -50,9 +50,6 @@ function tableInit() {
         var secretCount = row.secretCount;
         var claimCount = row.claimCount;
         return '<div class="btn-group">' +
-            '<button title="' + scopeCount + 'scopes"><i class="fa fa-bars"></i>' + scopeCount + '</button>' +
-            '<button title="' + secretCount + 'secrets"><i class="fa fa-bars"></i>' + secretCount + '</button>' +
-            '<button title="' + claimCount + '+claims"><i class="fa fa-bars"></i>' + claimCount + '</button>' +
         '<button title"client detaiil" onclick="getDetail(\'' + row.id + '\')"><i class="fa fa-eye"></i></button>' +
         '<button title"client detaiil" onclick="removeApiResource(\'' + row.id + '\')"><i class="fa fa-trash"></i></button>' +
         '</div>';

@@ -12,7 +12,11 @@
     </h4>
 </div>
 <div id="modal-body" class="modal-body">
-    <table id="userClaims" class="table table-bordered">
+    <input id="txt_userId" type="hidden" value="@ViewBag.UserId" />
+    <table id="userRole" class="table table-bordered">
+        <thead>
+            <button type="button" onclick="addNewLineForRole()" class="btn btn-default btn-block">Add To Role</button>
+        </thead>
         <tr>
             <th>Operation</th>
             <th>Role Name</th>
@@ -22,7 +26,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>123</td>
+                    <td>
+                        <button onclick="deleteUserRole('@ViewBag.UserId','@item')"><i class="fa fa-trash"></i></button>
+                    </td>
                     <td>@item</td>
                 </tr>
             }
@@ -31,5 +37,4 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button id="saveChange" type="button" class="btn btn-primary">OK</button>
 </div>

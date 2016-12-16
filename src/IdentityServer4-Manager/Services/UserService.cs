@@ -24,7 +24,7 @@ namespace IdentityServer4_Manager.Services
             _roleManager = roleManager;
         }
 
-        public async Task<PagingResponse> GetDisplayUsers(PagingRequest pagingRequest, string userId, string userName)
+        public async Task<PagingResponse> GetPaged(PagingRequest pagingRequest, string userId, string userName)
         {
             int totalCount = 0;
             var users = await _userManager.Users
@@ -95,13 +95,13 @@ namespace IdentityServer4_Manager.Services
             return removeResult.Succeeded || addResult.Succeeded;
         }
 
-        public async Task<IdentityResult> CreateUser(string userName, string password, string email, string phoneNumber)
+        public async Task<IdentityResult> CreateUser(string userName, string password)
         {
             var usr = new Model.IdentityUser()
             {
-                UserName = userName,
-                Email = email,
-                PhoneNumber = phoneNumber
+                Id = Guid.NewGuid().ToString(),
+                SecurityStamp = userName,
+                UserName = userName
             };
             var result = await _userManager.CreateAsync(usr);
             _userManager.AddPasswordAsync(usr, password);
