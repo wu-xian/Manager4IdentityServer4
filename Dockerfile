@@ -1,7 +1,7 @@
 FROM microsoft/dotnet
 
-COPY ./src/IdentityServer4-Manager /app/
-WORKDIR /app/jenkins-test
+COPY ./publish /app/identityserver4-manager
+WORKDIR /app/identityserver4-manager
 #RUN ["dotnet", "restore"]
 #CMD rm /app/project.lock.json
 #CMD rm /app/project.json
@@ -14,10 +14,11 @@ WORKDIR /app/jenkins-test
 
 RUN ["ls"]
 
-RUN ["dotnet", "restore"]
+EXPOSE 9090
 
-RUN ["dotnet", "build"]
+RUN ["dotnet", "IdentityServer4-Manager.dll"]
 
-EXPOSE 5000
+#RUN ["dotnet", "build"]
 
-ENTRYPOINT ["dotnet", "run", "--server.urls", "http://0.0.0.0:5000"]
+
+#ENTRYPOINT ["dotnet", "run", "--server.urls", "http://0.0.0.0:5000"]
