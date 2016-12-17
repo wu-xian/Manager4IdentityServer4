@@ -16,7 +16,7 @@ RUN ["ls"]
 
 EXPOSE 9090
 
-RUN ["dotnet", "IdentityServer4-Manager.dll"]
+ENTRYPOINT ["dotnet", "IdentityServer4-Manager.dll"]
 
 #RUN ["dotnet", "build"]
 
