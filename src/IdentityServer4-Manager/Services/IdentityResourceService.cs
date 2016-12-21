@@ -23,7 +23,7 @@ namespace IdentityServer4_Manager.Services
         public async Task<PagingResponse> GetPaged(PagingRequest request)
         {
             int totalCount = 0;
-            var dbResult = await _idb.IdentityResources
+            var dbResult = _idb.IdentityResources
                 .Include(d => d.UserClaims)
                 .Paged(
                 d => true,
@@ -33,7 +33,7 @@ namespace IdentityServer4_Manager.Services
                 request.isAsc,
                 ref totalCount)
                 .Select(d => Mapper.Map<Model.ViewModel.IdentityResourceDisplay>(d))
-                .ToListAsync();
+                .ToList();
             return await Task.FromResult<PagingResponse>(new PagingResponse()
             {
                 Rows = dbResult,

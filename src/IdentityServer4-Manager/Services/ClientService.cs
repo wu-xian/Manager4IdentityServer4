@@ -4,6 +4,7 @@ using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4_Manager.Extension;
 using IdentityServer4_Manager.Model.ViewModel;
 using Microsoft.EntityFrameworkCore;
+using Sakura.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace IdentityServer4_Manager.Services
         public async Task<PagingResponse> GetPaged(PagingRequest request, string clientId, string clientName)
         {
             int totalCount = 0;
-            var dbResult = await _idb.Clients
+            var dbResult = _idb.Clients
                 .Include(d => d.AllowedScopes)
                 .Paged(d =>
                         ((string.IsNullOrEmpty(clientId) || (d.ClientId == clientId)) &&
@@ -35,8 +36,16 @@ namespace IdentityServer4_Manager.Services
                     ref totalCount
                     )
                 .Select(d => Mapper.Map<Model.ViewModel.ClientDisplay>(d))
-                .ToListAsync()
+                .ToList()
             ;
+            //var dbResult = _idb.Clients
+            //    .Include(d => d.AllowedScopes)
+            //    .Where(d =>
+            //            ((string.IsNullOrEmpty(clientId) || (d.ClientId == clientId)) &&
+            //            ((string.IsNullOrEmpty(clientName) || (d.ClientName == clientName))))
+            //            )
+            //    .ToPagedList(request.Limit, 1)
+            //    .Select(d => Mapper.Map<Model.ViewModel.ClientDisplay>(d));
             return await Task.FromResult<PagingResponse>(new PagingResponse()
             {
                 Total = totalCount,

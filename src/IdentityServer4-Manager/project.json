@@ -34,7 +34,9 @@
     "Microsoft.AspNetCore.Identity": "1.1.0",
     "AutoMapper": "5.2.0",
     "Microsoft.EntityFrameworkCore": "1.1.0",
-    "Microsoft.EntityFrameworkCore.Relational": "1.1.0"
+    "Microsoft.EntityFrameworkCore.Relational": "1.1.0",
+    "Sakura.AspNetCore.PagedList": "2.0.1",
+    "Sakura.AspNetCore.PagedList.Async": "1.0.0"
   },
 
   "tools": {

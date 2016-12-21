@@ -22,7 +22,7 @@ namespace IdentityServer4_Manager.Services
         public async Task<PagingResponse> GetPaged(PagingRequest request)
         {
             int totalCount = 0;
-            var dbResult = await _idb.ApiResources
+            var dbResult = _idb.ApiResources
                 .Include(d => d.Scopes)
                 .Include(d => d.Secrets)
                 .Include(d => d.UserClaims)
@@ -35,12 +35,12 @@ namespace IdentityServer4_Manager.Services
                 ref totalCount
                 )
                 .Select(d => Mapper.Map<ApiResourceDisplay>(d))
-                .ToListAsync();
-            return new PagingResponse()
+                .ToList();
+            return await Task.FromResult(new PagingResponse()
             {
                 Rows = dbResult,
                 Total = totalCount
-            };
+            });
         }
 
         public async Task<int> Create(ApiResource apiResource)
