@@ -23,29 +23,29 @@ namespace IdentityServer4_Manager.Services
         public async Task<PagingResponse> GetPaged(PagingRequest request, string clientId, string clientName)
         {
             int totalCount = 0;
-            var dbResult = _idb.Clients
-                .Include(d => d.AllowedScopes)
-                .Paged(d =>
-                        ((string.IsNullOrEmpty(clientId) || (d.ClientId == clientId)) &&
-                        ((string.IsNullOrEmpty(clientName) || (d.ClientName == clientName)))
-                    ),
-                    request.Order,
-                    request.Offset,
-                    request.Limit,
-                    request.isAsc,
-                    ref totalCount
-                    )
-                .Select(d => Mapper.Map<Model.ViewModel.ClientDisplay>(d))
-                .ToList()
-            ;
             //var dbResult = _idb.Clients
             //    .Include(d => d.AllowedScopes)
-            //    .Where(d =>
+            //    .Paged(d =>
             //            ((string.IsNullOrEmpty(clientId) || (d.ClientId == clientId)) &&
-            //            ((string.IsNullOrEmpty(clientName) || (d.ClientName == clientName))))
-            //            )
-            //    .ToPagedList(request.Limit, 1)
-            //    .Select(d => Mapper.Map<Model.ViewModel.ClientDisplay>(d));
+            //            ((string.IsNullOrEmpty(clientName) || (d.ClientName == clientName)))
+            //        ),
+            //        request.Order,
+            //        request.Offset,
+            //        request.Limit,
+            //        request.isAsc,
+            //        ref totalCount
+            //        )
+            //    .Select(d => Mapper.Map<Model.ViewModel.ClientDisplay>(d))
+            //    .ToList()
+            //;
+            var dbResult = _idb.Clients
+                .Include(d => d.AllowedScopes)
+                .Where(d =>
+                        ((string.IsNullOrEmpty(clientId) || (d.ClientId == clientId)) &&
+                        ((string.IsNullOrEmpty(clientName) || (d.ClientName == clientName))))
+                        )
+                .ToPagedList(request.Limit, 1)
+                .Select(d => Mapper.Map<Model.ViewModel.ClientDisplay>(d));
             return await Task.FromResult<PagingResponse>(new PagingResponse()
             {
                 Total = totalCount,
