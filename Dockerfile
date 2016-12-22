@@ -14,10 +14,10 @@ WORKDIR /app/IdentityServer4-Manager
 
 RUN ["ls"]
 
-RUN ["dotnet", "restore"]
+CMD ["dotnet", "restore" ,"-s","http://192.168.0.102:9081/api/v2/"]
 
 RUN ["dotnet", "build"]
 
 EXPOSE 5000
 
-ENTRYPOINT ["dotnet", "run", "--server.urls", "http://0.0.0.0:5000"]
+ENTRYPOINT ["dotnet", "run"]

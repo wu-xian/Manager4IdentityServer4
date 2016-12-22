@@ -16,7 +16,7 @@ namespace IdentityServer4_Manager
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseUrls("http://*:9090")
+                .UseUrls("http://*:5000")
                 .Build();
 
             host.Run();
