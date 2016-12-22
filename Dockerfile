@@ -14,8 +14,7 @@ WORKDIR /app/IdentityServer4-Manager
 
 RUN ["ls"]
 
-RUN ["dotnet", "restore"]
-#, "-s", "http://192.168.0.102:9081/api/v2/"]
+RUN ["dotnet", "restore", "-s", "http://192.168.0.102:9081/api/v2/"]
 
 RUN ["dotnet", "build"]
 
