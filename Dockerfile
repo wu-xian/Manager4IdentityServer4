@@ -14,7 +14,7 @@ WORKDIR /app/IdentityServer4-Manager
 
 RUN ["ls"]
 
-RUN ["dotnet", "restore", "-s", "https://nuget.cnblogs.com/v3/index.json"]
+RUN ["dotnet", "restore", "-s", "http://192.168.0.102:9081/api/v2/"]
 
 RUN ["dotnet", "build"]
 
