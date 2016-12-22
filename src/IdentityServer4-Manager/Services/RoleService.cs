@@ -37,11 +37,11 @@ namespace IdentityServer4_Manager.Services
                     )
                 .Select(d => Mapper.Map<RoleDisplay>(d))
                 .ToList();
-            return new PagingResponse()
+            return await Task.FromResult(new PagingResponse()
             {
                 Rows = dbResult,
                 Total = totalCount
-            };
+            });
         }
 
         public async Task<IdentityRole> GetById(string id)
