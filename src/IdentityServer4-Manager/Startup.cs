@@ -43,6 +43,12 @@ namespace IdentityServer4_Manager
             //add host services
             AddServices(services);
 
+            var authPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder().RequireRole("admin").Build();
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy("default", authPolicy);
+            });
+
             services.AddDistributedMemoryCache();
 
             // Add framework services.
@@ -61,7 +67,7 @@ namespace IdentityServer4_Manager
             //Add IdentityServer services
             AddIdentityServer(services);
 
-            services.AddMvc();
+            services.AddMvc(action => action.Filters.Add(new Authentication.AuthFilter(authPolicy)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
