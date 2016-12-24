@@ -1,15 +1,16 @@
 ﻿using AutoMapper;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Entities;
-using IdentityServer4_Manager.Extension;
-using IdentityServer4_Manager.Model.ViewModel;
+using IdentityServer4.Manager.Extension;
+using IdentityServer4.Manager.Model.ViewModel;
 using Microsoft.EntityFrameworkCore;
+using Sakura.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Services
+namespace IdentityServer4.Manager.Services
 {
     public class ClientService
     {
@@ -22,21 +23,29 @@ namespace IdentityServer4_Manager.Services
         public async Task<PagingResponse> GetPaged(PagingRequest request, string clientId, string clientName)
         {
             int totalCount = 0;
-            var dbResult = await _idb.Clients
+            //var dbResult = _idb.Clients
+            //    .Include(d => d.AllowedScopes)
+            //    .Paged(d =>
+            //            ((string.IsNullOrEmpty(clientId) || (d.ClientId == clientId)) &&
+            //            ((string.IsNullOrEmpty(clientName) || (d.ClientName == clientName)))
+            //        ),
+            //        request.Order,
+            //        request.Offset,
+            //        request.Limit,
+            //        request.isAsc,
+            //        ref totalCount
+            //        )
+            //    .Select(d => Mapper.Map<Model.ViewModel.ClientDisplay>(d))
+            //    .ToList()
+            //;
+            var dbResult = _idb.Clients
                 .Include(d => d.AllowedScopes)
-                .Paged(d =>
+                .Where(d =>
                         ((string.IsNullOrEmpty(clientId) || (d.ClientId == clientId)) &&
-                        ((string.IsNullOrEmpty(clientName) || (d.ClientName == clientName)))
-                    ),
-                    request.Order,
-                    request.Offset,
-                    request.Limit,
-                    request.isAsc,
-                    ref totalCount
-                    )
-                .Select(d => Mapper.Map<Model.ViewModel.ClientDisplay>(d))
-                .ToListAsync()
-            ;
+                        ((string.IsNullOrEmpty(clientName) || (d.ClientName == clientName))))
+                        )
+                .ToPagedList(request.Limit, 1)
+                .Select(d => Mapper.Map<Model.ViewModel.ClientDisplay>(d));
             return await Task.FromResult<PagingResponse>(new PagingResponse()
             {
                 Total = totalCount,
@@ -52,7 +61,6 @@ namespace IdentityServer4_Manager.Services
                 ClientId = Guid.NewGuid().ToString(),
                 ClientName = clientName,
                 ClientUri = clientUri
-
             };
             _idb.Clients.Add(clien);
             return await _idb.SaveChangesAsync();

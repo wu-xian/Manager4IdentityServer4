@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 
-namespace IdentityServer4_Manager
+namespace IdentityServer4.Manager
 {
     public class Program
     {
@@ -16,7 +16,7 @@ namespace IdentityServer4_Manager
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseUrls("http://*:9090")
+                .UseUrls("http://*:5001")
                 .Build();
 
             host.Run();

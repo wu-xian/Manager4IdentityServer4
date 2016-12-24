@@ -10,12 +10,12 @@ using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using AutoMapper;
-using IdentityServer4_Manager.Services;
+using IdentityServer4.Manager.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Mappers;
 
-namespace IdentityServer4_Manager
+namespace IdentityServer4.Manager
 {
     public class Startup
     {
@@ -40,12 +40,18 @@ namespace IdentityServer4_Manager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //add host services
+            //host services
             AddServices(services);
+
+            var authPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder().RequireAssertion(d => true).Build();
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy("default", authPolicy);
+            });
 
             services.AddDistributedMemoryCache();
 
-            // Add framework services.
+            // framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddDbContext<Model.IdentityDbContext>(options =>
@@ -58,10 +64,10 @@ namespace IdentityServer4_Manager
                 .AddEntityFrameworkStores<Model.IdentityDbContext>()
                 ;
 
-            //Add IdentityServer services
+            //identityserver services
             AddIdentityServer(services);
 
-            services.AddMvc();
+            services.AddMvc(action => action.Filters.Add(new Authentication.AuthFilter(authPolicy)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

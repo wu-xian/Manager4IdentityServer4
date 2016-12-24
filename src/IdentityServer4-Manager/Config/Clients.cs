@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
 
-namespace IdentityServer4_Manager.Config
+namespace IdentityServer4.Manager.Config
 {
     public class Clients
     {

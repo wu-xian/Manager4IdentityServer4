@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Controllers
+namespace IdentityServer4.Manager.Controllers
 {
     public class ScopeController : Controller
     {

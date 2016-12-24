@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 using IdentityServer4.Models;
 using IdentityServer4.Stores;
 using IdentityServer4;
-using IdentityServer4_Manager.Services;
-using IdentityServer4_Manager.Model.ViewModel;
+using IdentityServer4.Manager.Services;
+using IdentityServer4.Manager.Model.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
-namespace IdentityServer4_Manager.Controllers
+namespace IdentityServer4.Manager.Controllers
 {
     /// <summary>
     /// This sample controller implements a typical login/logout/provision workflow for local and external accounts.
@@ -42,6 +43,7 @@ namespace IdentityServer4_Manager.Controllers
         /// Show login page
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl)
         {
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
@@ -67,6 +69,7 @@ namespace IdentityServer4_Manager.Controllers
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginInputModel model)
         {
             if (ModelState.IsValid)
@@ -155,6 +158,7 @@ namespace IdentityServer4_Manager.Controllers
         /// Show logout page
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout(string logoutId)
         {
             if (User.Identity.IsAuthenticated == false)
@@ -185,6 +189,7 @@ namespace IdentityServer4_Manager.Controllers
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout(LogoutViewModel model)
         {
             var idp = User?.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
@@ -232,6 +237,7 @@ namespace IdentityServer4_Manager.Controllers
         /// initiate roundtrip to external authentication provider
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult ExternalLogin(string provider, string returnUrl)
         {
             if (returnUrl != null)

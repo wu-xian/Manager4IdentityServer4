@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using IdentityServer4_Manager.Extension;
-using IdentityServer4_Manager.Model.ViewModel;
+using IdentityServer4.Manager.Extension;
+using IdentityServer4.Manager.Model.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Services
+namespace IdentityServer4.Manager.Services
 {
     public class RoleService
     {
@@ -24,7 +24,7 @@ namespace IdentityServer4_Manager.Services
         public async Task<PagingResponse> GetPaged(PagingRequest pagingRequest)
         {
             int totalCount = 0;
-            var dbResult = await _roleManager.Roles
+            var dbResult = _roleManager.Roles
                 .Include(d => d.Claims)
                 .Include(d => d.Users)
                 .Paged(
@@ -36,12 +36,12 @@ namespace IdentityServer4_Manager.Services
                     ref totalCount
                     )
                 .Select(d => Mapper.Map<RoleDisplay>(d))
-                .ToListAsync();
-            return new PagingResponse()
+                .ToList();
+            return await Task.FromResult(new PagingResponse()
             {
                 Rows = dbResult,
                 Total = totalCount
-            };
+            });
         }
 
         public async Task<IdentityRole> GetById(string id)

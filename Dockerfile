@@ -1,7 +1,7 @@
 FROM microsoft/dotnet
 
-COPY ./publish /app/identityserver4-manager
-WORKDIR /app/identityserver4-manager
+COPY ./src/IdentityServer4-Manager /app/IdentityServer4-Manager
+WORKDIR /app/IdentityServer4-Manager
 #RUN ["dotnet", "restore"]
 #CMD rm /app/project.lock.json
 #CMD rm /app/project.json
@@ -14,11 +14,10 @@ WORKDIR /app/identityserver4-manager
 
 RUN ["ls"]
 
-EXPOSE 9090
+RUN ["dotnet", "restore", "-s", "http://192.168.0.102:9081/api/v2/"]
 
-ENTRYPOINT ["dotnet", "IdentityServer4-Manager.dll"]
+RUN ["dotnet", "build"]
 
-#RUN ["dotnet", "build"]
+EXPOSE 5000
 
-
-#ENTRYPOINT ["dotnet", "run", "--server.urls", "http://0.0.0.0:5000"]
+ENTRYPOINT ["dotnet", "run"]

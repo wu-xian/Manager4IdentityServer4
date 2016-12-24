@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace IdentityServer4_Manager.Model.ViewModel
+namespace IdentityServer4.Manager.Model.ViewModel
 {
     public class LoginViewModel : LoginInputModel
     {

@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Extension
+namespace IdentityServer4.Manager.Extension
 {
     public static class IQueryableExtension
     {

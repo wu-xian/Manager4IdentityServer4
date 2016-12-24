@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Services
+namespace IdentityServer4.Manager.Services
 {
     public class UserLoginService
     {

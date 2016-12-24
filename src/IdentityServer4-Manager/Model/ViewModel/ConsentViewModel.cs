@@ -7,7 +7,7 @@ using System.Linq;
 using IdentityServer4.Models;
 using IdentityServer4;
 
-namespace IdentityServer4_Manager.Model.ViewModel
+namespace IdentityServer4.Manager.Model.ViewModel
 {
     public class ConsentViewModel : ConsentInputModel
     {
