@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Config
+namespace IdentityServer4.Manager.Config
 {
     public class Users
     {

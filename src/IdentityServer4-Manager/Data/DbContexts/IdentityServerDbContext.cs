@@ -7,7 +7,7 @@ using IdentityServer4.EntityFramework.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace IdentityServer4_Manager.Data.DbContexts
+namespace IdentityServer4.Manager.Data.DbContexts
 {
     public class IdentityServerDbContext : IdentityDbContext<Model.IdentityUser>,
         IConfigurationDbContext,

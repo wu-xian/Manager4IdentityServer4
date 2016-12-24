@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 using IdentityServer4.Models;
 using IdentityServer4.Stores;
 using IdentityServer4;
-using IdentityServer4_Manager.Services;
-using IdentityServer4_Manager.Model.ViewModel;
+using IdentityServer4.Manager.Services;
+using IdentityServer4.Manager.Model.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 
-namespace IdentityServer4_Manager.Controllers
+namespace IdentityServer4.Manager.Controllers
 {
     /// <summary>
     /// This sample controller implements a typical login/logout/provision workflow for local and external accounts.

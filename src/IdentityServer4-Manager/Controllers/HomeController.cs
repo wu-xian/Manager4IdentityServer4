@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using IdentityServer4_Manager.Model;
+using IdentityServer4.Manager.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 
-namespace IdentityServer4_Manager.Controllers
+namespace IdentityServer4.Manager.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,6 +1,6 @@
 ﻿using IdentityServer4.EntityFramework.Entities;
-using IdentityServer4_Manager.Model.ViewModel;
-using IdentityServer4_Manager.Services;
+using IdentityServer4.Manager.Model.ViewModel;
+using IdentityServer4.Manager.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Controllers
+namespace IdentityServer4.Manager.Controllers
 {
     public class ClientController : Controller
     {

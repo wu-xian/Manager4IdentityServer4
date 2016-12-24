@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using IdentityServer4.Stores;
 using IdentityServer4.Services;
-using IdentityServer4_Manager.Model.ViewModel;
+using IdentityServer4.Manager.Model.ViewModel;
 using IdentityServer4.Models;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace IdentityServer4_Manager.Controllers
+namespace IdentityServer4.Manager.Controllers
 {
     public class ConsentController : Controller
     {

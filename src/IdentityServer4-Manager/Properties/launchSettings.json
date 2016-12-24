@@ -14,7 +14,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "IdentityServer4_Manager": {
+    "IdentityServer4.Manager": {
       "commandName": "Project",
       "launchUrl": "http://localhost:5000",
       "environmentVariables": {

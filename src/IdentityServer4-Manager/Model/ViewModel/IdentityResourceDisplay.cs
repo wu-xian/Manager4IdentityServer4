@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Model.ViewModel
+namespace IdentityServer4.Manager.Model.ViewModel
 {
     public class IdentityResourceDisplay
     {

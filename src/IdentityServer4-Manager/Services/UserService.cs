@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using IdentityServer4_Manager.Exceptions;
-using IdentityServer4_Manager.Extension;
-using IdentityServer4_Manager.Model.ViewModel;
+using IdentityServer4.Manager.Exceptions;
+using IdentityServer4.Manager.Extension;
+using IdentityServer4.Manager.Model.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Services
+namespace IdentityServer4.Manager.Services
 {
     public class UserService
     {

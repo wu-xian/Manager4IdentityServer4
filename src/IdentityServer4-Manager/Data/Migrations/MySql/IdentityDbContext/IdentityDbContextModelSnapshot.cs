@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using IdentityServer4_Manager.Model;
+using IdentityServer4.Manager.Model;
 
 namespace IdentityServer4Manager.Data.Migrations.MySql.IdentityDbContext
 {
-    [DbContext(typeof(IdentityServer4_Manager.Model.IdentityDbContext))]
+    [DbContext(typeof(IdentityServer4.Manager.Model.IdentityDbContext))]
     partial class IdentityDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -15,7 +15,7 @@ namespace IdentityServer4Manager.Data.Migrations.MySql.IdentityDbContext
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1");
 
-            modelBuilder.Entity("IdentityServer4_Manager.Model.IdentityUser", b =>
+            modelBuilder.Entity("IdentityServer4.Manager.Model.IdentityUser", b =>
                 {
                     b.Property<string>("Id");
 
@@ -181,7 +181,7 @@ namespace IdentityServer4Manager.Data.Migrations.MySql.IdentityDbContext
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("IdentityServer4_Manager.Model.IdentityUser")
+                    b.HasOne("IdentityServer4.Manager.Model.IdentityUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -189,7 +189,7 @@ namespace IdentityServer4Manager.Data.Migrations.MySql.IdentityDbContext
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("IdentityServer4_Manager.Model.IdentityUser")
+                    b.HasOne("IdentityServer4.Manager.Model.IdentityUser")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -202,7 +202,7 @@ namespace IdentityServer4Manager.Data.Migrations.MySql.IdentityDbContext
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("IdentityServer4_Manager.Model.IdentityUser")
+                    b.HasOne("IdentityServer4.Manager.Model.IdentityUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

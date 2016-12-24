@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using IdentityServer4_Manager.Services;
-using IdentityServer4_Manager.Model.ViewModel;
+using IdentityServer4.Manager.Services;
+using IdentityServer4.Manager.Model.ViewModel;
 using IdentityServer4.EntityFramework.Entities;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace IdentityServer4_Manager.Controllers
+namespace IdentityServer4.Manager.Controllers
 {
     public class ApiResourceController : Controller
     {

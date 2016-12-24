@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Entities;
-using IdentityServer4_Manager.Extension;
-using IdentityServer4_Manager.Model.ViewModel;
+using IdentityServer4.Manager.Extension;
+using IdentityServer4.Manager.Model.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using Sakura.AspNetCore;
 using System;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Services
+namespace IdentityServer4.Manager.Services
 {
     public class ClientService
     {
@@ -61,7 +61,6 @@ namespace IdentityServer4_Manager.Services
                 ClientId = Guid.NewGuid().ToString(),
                 ClientName = clientName,
                 ClientUri = clientUri
-
             };
             _idb.Clients.Add(clien);
             return await _idb.SaveChangesAsync();

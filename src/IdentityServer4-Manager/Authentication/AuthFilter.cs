@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4_Manager.Authentication
+namespace IdentityServer4.Manager.Authentication
 {
     public class AuthFilter : AuthorizeFilter
     {
@@ -23,10 +23,10 @@ namespace IdentityServer4_Manager.Authentication
         {
             Console.WriteLine("#OnAuthorizationAsync#");
             //context.RouteData.
-            context.Result = new Microsoft.AspNetCore.Mvc.JsonResult(new { success = "haha" }, new Newtonsoft.Json.JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            });
+            //context.Result = new Microsoft.AspNetCore.Mvc.JsonResult(new { success = "haha" }, new Newtonsoft.Json.JsonSerializerSettings()
+            //{
+            //    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            //});
             return base.OnAuthorizationAsync(context);
         }
     }
